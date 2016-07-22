@@ -1,11 +1,30 @@
+#
+#    Licensed to the Apache Software Foundation (ASF) under one or more
+#    contributor license agreements.  See the NOTICE file distributed with
+#    this work for additional information regarding copyright ownership.
+#    The ASF licenses this file to You under the Apache License, Version 2.0
+#    (the "License"); you may not use this file except in compliance with
+#    the License.  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
+#
+
 language: java
 
 sudo: false
 
 notifications:
   email:
-    recipients:
-      - dataflow-sdk-build-notifications+travis@google.com
+    # Group email notifications are disabled for now, since we cannot do it on a per-branch basis.
+    # Right now, it would trigger a notification for each fork, which generates a lot of spam.
+    # recipients:
+    #  - dataflow-sdk-build-notifications+travis@google.com
     on_success: change
     on_failure: always
 
@@ -16,20 +35,21 @@ matrix:
       env: MAVEN_OVERRIDE=""
     # On Linux, run with specific JDKs only.
     - os: linux
-      env: CUSTOM_JDK="oraclejdk8" MAVEN_OVERRIDE="-DforkCount=0"
+      env: CUSTOM_JDK="oraclejdk8" MAVEN_OVERRIDE="-DbeamSurefireArgline='-Xmx512m'"
     - os: linux
-      env: CUSTOM_JDK="oraclejdk7" MAVEN_OVERRIDE="-DforkCount=0"
+      env: CUSTOM_JDK="oraclejdk7" MAVEN_OVERRIDE="-DbeamSurefireArgline='-Xmx512m'"
     - os: linux
-      env: CUSTOM_JDK="openjdk7" MAVEN_OVERRIDE="-DforkCount=0"
+      env: CUSTOM_JDK="openjdk7" MAVEN_OVERRIDE="-DbeamSurefireArgline='-Xmx512m'"
 
 before_install:
+  - echo "MAVEN_OPTS='-Xmx1024m -XX:MaxPermSize=512m'" > ~/.mavenrc
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then jdk_switcher use "$CUSTOM_JDK"; fi
+  - export BEAM_SUREFIRE_ARGLINE="-Xmx512m"
 
 install:
-  - travis_retry mvn install clean -U -DskipTests=true
+  - travis_retry mvn -B install clean -U -DskipTests=true
 
 script:
-  - travis_retry mvn versions:set -DnewVersion=manual_build
-  - travis_retry mvn $MAVEN_OVERRIDE verify -U
-  - travis_retry travis/test_wordcount.sh
+  - travis_retry mvn -B $MAVEN_OVERRIDE install -U
+  - travis_retry testing/travis/test_wordcount.sh
