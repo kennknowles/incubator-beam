@@ -198,8 +198,6 @@ public final class TransformTranslator {
             (WindowedValueCoder<V>) inputIterableElementCoder;
 
         Coder<V> inputIterableElementValueCoder = inputIterableWindowedValueCoder.getValueCoder();
-        Coder<KV<K, Iterable<V>>> outputKvCoder =
-            KvCoder.of(keyCoder, IterableCoder.of(valueCoder));
 
         @SuppressWarnings("unchecked")
         WindowingStrategy<?, W> windowingStrategy =
