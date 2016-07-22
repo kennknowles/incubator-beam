@@ -29,7 +29,6 @@ import org.apache.beam.sdk.transforms.windowing.PaneInfo;
 import org.apache.beam.sdk.util.TimerInternals;
 import org.apache.beam.sdk.util.WindowedValue;
 import org.apache.beam.sdk.util.WindowingInternals;
-import org.apache.beam.sdk.util.state.InMemoryStateInternals;
 import org.apache.beam.sdk.util.state.StateInternals;
 import org.apache.beam.sdk.values.PCollectionView;
 import org.apache.beam.sdk.values.TupleTag;
@@ -164,10 +163,8 @@ public abstract class SparkProcessContext<InputT, OutputT, ValueT>
 
       @Override
       public StateInternals stateInternals() {
-        //TODO: implement state internals.
-        // This is a temporary placeholder to get the TfIdfTest
-        // working for the initial Beam code drop.
-        return InMemoryStateInternals.forKey("DUMMY");
+        throw new UnsupportedOperationException(
+            "WindowingInternals#stateInternals() is not yet supported.");
       }
 
       @Override
