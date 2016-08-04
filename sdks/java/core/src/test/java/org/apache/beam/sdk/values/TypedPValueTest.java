@@ -26,7 +26,7 @@ import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.coders.VarIntCoder;
 import org.apache.beam.sdk.testing.TestPipeline;
 import org.apache.beam.sdk.transforms.Create;
-import org.apache.beam.sdk.transforms.DoFn;
+import org.apache.beam.sdk.transforms.OldDoFn;
 import org.apache.beam.sdk.transforms.ParDo;
 
 import org.junit.Rule;
@@ -44,7 +44,7 @@ public class TypedPValueTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-  private static class IdentityDoFn extends DoFn<Integer, Integer> {
+  private static class IdentityDoFn extends OldDoFn<Integer, Integer> {
     private static final long serialVersionUID = 0;
     @Override
     public void processElement(ProcessContext c) throws Exception {
@@ -76,8 +76,12 @@ public class TypedPValueTest {
 
     thrown.expect(IllegalStateException.class);
     thrown.expectMessage("No Coder has been manually specified");
-    thrown.expectMessage("erasure");
-    thrown.expectMessage("see TupleTag Javadoc");
+    thrown.expectMessage(
+        containsString("Building a Coder using a registered CoderFactory failed"));
+    thrown.expectMessage(
+        containsString("Building a Coder from the @DefaultCoder annotation failed"));
+    thrown.expectMessage(
+        containsString("Building a Coder from the fallback CoderProvider failed"));
 
     tuple.get(untypedSideOutputTag).getCoder();
   }
@@ -91,8 +95,12 @@ public class TypedPValueTest {
 
     thrown.expect(IllegalStateException.class);
     thrown.expectMessage("No Coder has been manually specified");
-    thrown.expectMessage("erasure");
-    thrown.expectMessage("see TupleTag Javadoc");
+    thrown.expectMessage(
+        containsString("Building a Coder using a registered CoderFactory failed"));
+    thrown.expectMessage(
+        containsString("Building a Coder from the @DefaultCoder annotation failed"));
+    thrown.expectMessage(
+        containsString("Building a Coder from the fallback CoderProvider failed"));
 
     tuple.get(untypedSideOutputTag).getCoder();
   }
@@ -121,7 +129,7 @@ public class TypedPValueTest {
   static class EmptyClass {
   }
 
-  private static class EmptyClassDoFn extends DoFn<Integer, EmptyClass> {
+  private static class EmptyClassDoFn extends OldDoFn<Integer, EmptyClass> {
     private static final long serialVersionUID = 0;
     @Override
     public void processElement(ProcessContext c) throws Exception {

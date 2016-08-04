@@ -22,6 +22,7 @@ import org.apache.beam.runners.spark.EvaluationResult;
 import org.apache.beam.runners.spark.SparkRunner;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.coders.StringUtf8Coder;
+import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.runners.AggregatorValues;
 import org.apache.beam.sdk.testing.PAssert;
@@ -29,9 +30,9 @@ import org.apache.beam.sdk.transforms.Aggregator;
 import org.apache.beam.sdk.transforms.ApproximateUnique;
 import org.apache.beam.sdk.transforms.Count;
 import org.apache.beam.sdk.transforms.Create;
-import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.Flatten;
 import org.apache.beam.sdk.transforms.Max;
+import org.apache.beam.sdk.transforms.OldDoFn;
 import org.apache.beam.sdk.transforms.PTransform;
 import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.transforms.Sum;
@@ -68,7 +69,9 @@ public class MultiOutputWordCountTest {
 
   @Test
   public void testRun() throws Exception {
-    Pipeline p = Pipeline.create(PipelineOptionsFactory.create());
+    PipelineOptions options = PipelineOptionsFactory.create();
+    options.setRunner(SparkRunner.class);
+    Pipeline p = Pipeline.create(options);
     PCollection<String> regex = p.apply(Create.of("[^a-zA-Z']+"));
     PCollection<String> w1 = p.apply(Create.of("Here are some words to count", "and some others"));
     PCollection<String> w2 = p.apply(Create.of("Here are some more words", "and even more words"));
@@ -100,9 +103,9 @@ public class MultiOutputWordCountTest {
   }
 
   /**
-   * A DoFn that tokenizes lines of text into individual words.
+   * A OldDoFn that tokenizes lines of text into individual words.
    */
-  static class ExtractWordsFn extends DoFn<String, String> {
+  static class ExtractWordsFn extends OldDoFn<String, String> {
 
     private final Aggregator<Integer, Integer> totalWords = createAggregator("totalWords",
         new Sum.SumIntegerFn());
@@ -167,7 +170,7 @@ public class MultiOutputWordCountTest {
     }
   }
 
-  private static class FormatCountsFn extends DoFn<KV<String, Long>, String> {
+  private static class FormatCountsFn extends OldDoFn<KV<String, Long>, String> {
     @Override
     public void processElement(ProcessContext c) {
       c.output(c.element().getKey() + ": " + c.element().getValue());

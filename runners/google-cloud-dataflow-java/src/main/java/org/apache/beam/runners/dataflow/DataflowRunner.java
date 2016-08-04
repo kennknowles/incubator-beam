@@ -46,7 +46,6 @@ import org.apache.beam.sdk.Pipeline.PipelineVisitor;
 import org.apache.beam.sdk.PipelineResult.State;
 import org.apache.beam.sdk.annotations.Experimental;
 import org.apache.beam.sdk.coders.BigEndianLongCoder;
-import org.apache.beam.sdk.coders.CannotProvideCoderException;
 import org.apache.beam.sdk.coders.Coder;
 import org.apache.beam.sdk.coders.Coder.NonDeterministicException;
 import org.apache.beam.sdk.coders.CoderException;
@@ -79,16 +78,15 @@ import org.apache.beam.sdk.transforms.Aggregator;
 import org.apache.beam.sdk.transforms.Combine;
 import org.apache.beam.sdk.transforms.Combine.CombineFn;
 import org.apache.beam.sdk.transforms.Create;
-import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.Flatten;
 import org.apache.beam.sdk.transforms.GroupByKey;
+import org.apache.beam.sdk.transforms.OldDoFn;
 import org.apache.beam.sdk.transforms.PTransform;
 import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.transforms.SerializableFunction;
 import org.apache.beam.sdk.transforms.View;
 import org.apache.beam.sdk.transforms.View.CreatePCollectionView;
 import org.apache.beam.sdk.transforms.WithKeys;
-import org.apache.beam.sdk.transforms.windowing.AfterPane;
 import org.apache.beam.sdk.transforms.windowing.BoundedWindow;
 import org.apache.beam.sdk.transforms.windowing.GlobalWindow;
 import org.apache.beam.sdk.transforms.windowing.GlobalWindows;
@@ -145,10 +143,8 @@ import com.google.common.collect.Multimap;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
-import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,7 +172,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import javax.annotation.Nullable;
 
 /**
@@ -216,10 +211,10 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
 
   // Default Docker container images that execute Dataflow worker harness, residing in Google
   // Container Registry, separately for Batch and Streaming.
-  public static final String BATCH_WORKER_HARNESS_CONTAINER_IMAGE
-      = "dataflow.gcr.io/v1beta3/beam-java-batch:beam-master-20160714";
-  public static final String STREAMING_WORKER_HARNESS_CONTAINER_IMAGE
-      = "dataflow.gcr.io/v1beta3/beam-java-streaming:beam-master-20160714";
+  public static final String BATCH_WORKER_HARNESS_CONTAINER_IMAGE =
+      "dataflow.gcr.io/v1beta3/beam-java-batch:beam-master-20160804-dofn";
+  public static final String STREAMING_WORKER_HARNESS_CONTAINER_IMAGE =
+      "dataflow.gcr.io/v1beta3/beam-java-streaming:beam-master-20160804-dofn";
 
   // The limit of CreateJob request size.
   private static final int CREATE_JOB_REQUEST_LIMIT_BYTES = 10 * 1024 * 1024;
@@ -329,7 +324,6 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
     if (options.isStreaming()) {
       builder.put(Combine.GloballyAsSingletonView.class,
                   StreamingCombineGloballyAsSingletonView.class);
-      builder.put(Create.Values.class, StreamingCreate.class);
       builder.put(View.AsMap.class, StreamingViewAsMap.class);
       builder.put(View.AsMultimap.class, StreamingViewAsMultimap.class);
       builder.put(View.AsSingleton.class, StreamingViewAsSingleton.class);
@@ -610,9 +604,8 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
 
     // Use a raw client for post-launch monitoring, as status calls may fail
     // regularly and need not be retried automatically.
-    DataflowPipelineJob dataflowPipelineJob =
-        new DataflowPipelineJob(options.getProject(), jobResult.getId(),
-            options.getDataflowClient(), aggregatorTransforms);
+    DataflowPipelineJob dataflowPipelineJob = new DataflowPipelineJob(
+        options.getProject(), jobResult.getId(), options, aggregatorTransforms);
 
     // If the service returned client request id, the SDK needs to compare it
     // with the original id generated in the request, if they are not the same
@@ -767,13 +760,14 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
       PTransform<PCollection<T>, PCollection<KV<Integer, Iterable<KV<W, WindowedValue<T>>>>>> {
 
     /**
-     * A {@link DoFn} that for each element outputs a {@code KV} structure suitable for
+     * A {@link OldDoFn} that for each element outputs a {@code KV} structure suitable for
      * grouping by the hash of the window's byte representation and sorting the grouped values
      * using the window's byte representation.
      */
     @SystemDoFnInternal
     private static class UseWindowHashAsKeyAndWindowAsSortKeyDoFn<T, W extends BoundedWindow>
-        extends DoFn<T, KV<Integer, KV<W, WindowedValue<T>>>> implements DoFn.RequiresWindowAccess {
+        extends OldDoFn<T, KV<Integer, KV<W, WindowedValue<T>>>> implements
+        OldDoFn.RequiresWindowAccess {
 
       private final IsmRecordCoder<?> ismCoderForHash;
       private UseWindowHashAsKeyAndWindowAsSortKeyDoFn(IsmRecordCoder<?> ismCoderForHash) {
@@ -833,15 +827,15 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
       extends PTransform<PCollection<T>, PCollectionView<T>> {
 
     /**
-     * A {@link DoFn} that outputs {@link IsmRecord}s. These records are structured as follows:
+     * A {@link OldDoFn} that outputs {@link IsmRecord}s. These records are structured as follows:
      * <ul>
      *   <li>Key 1: Window
      *   <li>Value: Windowed value
      * </ul>
      */
     static class IsmRecordForSingularValuePerWindowDoFn<T, W extends BoundedWindow>
-        extends DoFn<KV<Integer, Iterable<KV<W, WindowedValue<T>>>>,
-                     IsmRecord<WindowedValue<T>>> {
+        extends OldDoFn<KV<Integer, Iterable<KV<W, WindowedValue<T>>>>,
+                             IsmRecord<WindowedValue<T>>> {
 
       private final Coder<W> windowCoder;
       IsmRecordForSingularValuePerWindowDoFn(Coder<W> windowCoder) {
@@ -907,8 +901,8 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
         applyForSingleton(
             DataflowRunner runner,
             PCollection<T> input,
-            DoFn<KV<Integer, Iterable<KV<W, WindowedValue<T>>>>,
-                 IsmRecord<WindowedValue<FinalT>>> doFn,
+            OldDoFn<KV<Integer, Iterable<KV<W, WindowedValue<T>>>>,
+                             IsmRecord<WindowedValue<FinalT>>> doFn,
             boolean hasDefault,
             FinalT defaultValue,
             Coder<FinalT> defaultValueCoder) {
@@ -1003,7 +997,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
   static class BatchViewAsList<T>
       extends PTransform<PCollection<T>, PCollectionView<List<T>>> {
     /**
-     * A {@link DoFn} which creates {@link IsmRecord}s assuming that each element is within the
+     * A {@link OldDoFn} which creates {@link IsmRecord}s assuming that each element is within the
      * global window. Each {@link IsmRecord} has
      * <ul>
      *   <li>Key 1: Global window</li>
@@ -1013,7 +1007,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
      */
     @SystemDoFnInternal
     static class ToIsmRecordForGlobalWindowDoFn<T>
-        extends DoFn<T, IsmRecord<WindowedValue<T>>> {
+        extends OldDoFn<T, IsmRecord<WindowedValue<T>>> {
 
       long indexInBundle;
       @Override
@@ -1035,7 +1029,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
     }
 
     /**
-     * A {@link DoFn} which creates {@link IsmRecord}s comparing successive elements windows
+     * A {@link OldDoFn} which creates {@link IsmRecord}s comparing successive elements windows
      * to locate the window boundaries. The {@link IsmRecord} has:
      * <ul>
      *   <li>Key 1: Window</li>
@@ -1045,8 +1039,8 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
      */
     @SystemDoFnInternal
     static class ToIsmRecordForNonGlobalWindowDoFn<T, W extends BoundedWindow>
-        extends DoFn<KV<Integer, Iterable<KV<W, WindowedValue<T>>>>,
-                     IsmRecord<WindowedValue<T>>> {
+        extends OldDoFn<KV<Integer, Iterable<KV<W, WindowedValue<T>>>>,
+                             IsmRecord<WindowedValue<T>>> {
 
       private final Coder<W> windowCoder;
       ToIsmRecordForNonGlobalWindowDoFn(Coder<W> windowCoder) {
@@ -1179,7 +1173,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
       extends PTransform<PCollection<KV<K, V>>, PCollectionView<Map<K, V>>> {
 
     /**
-     * A {@link DoFn} which groups elements by window boundaries. For each group,
+     * A {@link OldDoFn} which groups elements by window boundaries. For each group,
      * the group of elements is transformed into a {@link TransformedMap}.
      * The transformed {@code Map<K, V>} is backed by a {@code Map<K, WindowedValue<V>>}
      * and contains a function {@code WindowedValue<V> -> V}.
@@ -1193,10 +1187,10 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
      * </ul>
      */
     static class ToMapDoFn<K, V, W extends BoundedWindow>
-        extends DoFn<KV<Integer, Iterable<KV<W, WindowedValue<KV<K, V>>>>>,
-                     IsmRecord<WindowedValue<TransformedMap<K,
-                                             WindowedValue<V>,
-                                             V>>>> {
+        extends OldDoFn<KV<Integer, Iterable<KV<W, WindowedValue<KV<K, V>>>>>,
+                             IsmRecord<WindowedValue<TransformedMap<K,
+                                                     WindowedValue<V>,
+                                                     V>>>> {
 
       private final Coder<W> windowCoder;
       ToMapDoFn(Coder<W> windowCoder) {
@@ -1363,8 +1357,8 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
 
       @SystemDoFnInternal
       private static class GroupByKeyHashAndSortByKeyAndWindowDoFn<K, V, W>
-          extends DoFn<KV<K, V>, KV<Integer, KV<KV<K, W>, WindowedValue<V>>>>
-          implements DoFn.RequiresWindowAccess {
+          extends OldDoFn<KV<K, V>, KV<Integer, KV<KV<K, W>, WindowedValue<V>>>>
+          implements OldDoFn.RequiresWindowAccess {
 
         private final IsmRecordCoder<?> coder;
         private GroupByKeyHashAndSortByKeyAndWindowDoFn(IsmRecordCoder<?> coder) {
@@ -1417,7 +1411,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
     }
 
     /**
-     * A {@link DoFn} which creates {@link IsmRecord}s comparing successive elements windows
+     * A {@link OldDoFn} which creates {@link IsmRecord}s comparing successive elements windows
      * and keys to locate window and key boundaries. The main output {@link IsmRecord}s have:
      * <ul>
      *   <li>Key 1: Window</li>
@@ -1429,12 +1423,12 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
      * <p>Additionally, we output all the unique keys per window seen to {@code outputForEntrySet}
      * and the unique key count per window to {@code outputForSize}.
      *
-     * <p>Finally, if this DoFn has been requested to perform unique key checking, it will
+     * <p>Finally, if this OldDoFn has been requested to perform unique key checking, it will
      * throw an {@link IllegalStateException} if more than one key per window is found.
      */
     static class ToIsmRecordForMapLikeDoFn<K, V, W extends BoundedWindow>
-        extends DoFn<KV<Integer, Iterable<KV<KV<K, W>, WindowedValue<V>>>>,
-                     IsmRecord<WindowedValue<V>>> {
+        extends OldDoFn<KV<Integer, Iterable<KV<KV<K, W>, WindowedValue<V>>>>,
+                             IsmRecord<WindowedValue<V>>> {
 
       private final TupleTag<KV<Integer, KV<W, Long>>> outputForSize;
       private final TupleTag<KV<Integer, KV<W, K>>> outputForEntrySet;
@@ -1562,7 +1556,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
     }
 
     /**
-     * A {@link DoFn} which outputs a metadata {@link IsmRecord} per window of:
+     * A {@link OldDoFn} which outputs a metadata {@link IsmRecord} per window of:
        * <ul>
        *   <li>Key 1: META key</li>
        *   <li>Key 2: window</li>
@@ -1570,11 +1564,11 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
        *   <li>Value: sum of values for window</li>
        * </ul>
        *
-       * <p>This {@link DoFn} is meant to be used to compute the number of unique keys
+       * <p>This {@link OldDoFn} is meant to be used to compute the number of unique keys
        * per window for map and multimap side inputs.
        */
     static class ToIsmMetadataRecordForSizeDoFn<K, V, W extends BoundedWindow>
-        extends DoFn<KV<Integer, Iterable<KV<W, Long>>>, IsmRecord<WindowedValue<V>>> {
+        extends OldDoFn<KV<Integer, Iterable<KV<W, Long>>>, IsmRecord<WindowedValue<V>>> {
       private final Coder<W> windowCoder;
       ToIsmMetadataRecordForSizeDoFn(Coder<W> windowCoder) {
         this.windowCoder = windowCoder;
@@ -1611,7 +1605,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
     }
 
     /**
-     * A {@link DoFn} which outputs a metadata {@link IsmRecord} per window and key pair of:
+     * A {@link OldDoFn} which outputs a metadata {@link IsmRecord} per window and key pair of:
        * <ul>
        *   <li>Key 1: META key</li>
        *   <li>Key 2: window</li>
@@ -1619,11 +1613,11 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
        *   <li>Value: key</li>
        * </ul>
        *
-       * <p>This {@link DoFn} is meant to be used to output index to key records
+       * <p>This {@link OldDoFn} is meant to be used to output index to key records
        * per window for map and multimap side inputs.
        */
     static class ToIsmMetadataRecordForKeyDoFn<K, V, W extends BoundedWindow>
-        extends DoFn<KV<Integer, Iterable<KV<W, K>>>, IsmRecord<WindowedValue<V>>> {
+        extends OldDoFn<KV<Integer, Iterable<KV<W, K>>>, IsmRecord<WindowedValue<V>>> {
 
       private final Coder<K> keyCoder;
       private final Coder<W> windowCoder;
@@ -1663,7 +1657,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
     }
 
     /**
-     * A {@link DoFn} which partitions sets of elements by window boundaries. Within each
+     * A {@link OldDoFn} which partitions sets of elements by window boundaries. Within each
      * partition, the set of elements is transformed into a {@link TransformedMap}.
      * The transformed {@code Map<K, Iterable<V>>} is backed by a
      * {@code Map<K, Iterable<WindowedValue<V>>>} and contains a function
@@ -1678,10 +1672,10 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
      * </ul>
      */
     static class ToMultimapDoFn<K, V, W extends BoundedWindow>
-        extends DoFn<KV<Integer, Iterable<KV<W, WindowedValue<KV<K, V>>>>>,
-                     IsmRecord<WindowedValue<TransformedMap<K,
-                                                            Iterable<WindowedValue<V>>,
-                                                            Iterable<V>>>>> {
+        extends OldDoFn<KV<Integer, Iterable<KV<W, WindowedValue<KV<K, V>>>>>,
+                             IsmRecord<WindowedValue<TransformedMap<K,
+                                                                    Iterable<WindowedValue<V>>,
+                                                                    Iterable<V>>>>> {
 
       private final Coder<W> windowCoder;
       ToMultimapDoFn(Coder<W> windowCoder) {
@@ -2340,7 +2334,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
           // WindmillSink.
           .apply(Reshuffle.<Integer, ValueWithRecordId<T>>of())
           .apply("StripIds", ParDo.of(
-              new DoFn<KV<Integer, ValueWithRecordId<T>>, T>() {
+              new OldDoFn<KV<Integer, ValueWithRecordId<T>>, T>() {
                 @Override
                 public void processElement(ProcessContext c) {
                   c.output(c.element().getValue().getValue());
@@ -2377,98 +2371,11 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
   }
 
   /**
-   * Specialized implementation for
-   * {@link org.apache.beam.sdk.transforms.Create.Values Create.Values} for the
-   * Dataflow runner in streaming mode.
-   */
-  private static class StreamingCreate<T> extends PTransform<PInput, PCollection<T>> {
-    private final Create.Values<T> transform;
-
-    /**
-     * Builds an instance of this class from the overridden transform.
-     */
-    @SuppressWarnings("unused") // used via reflection in DataflowRunner#apply()
-    public StreamingCreate(DataflowRunner runner, Create.Values<T> transform) {
-      this.transform = transform;
-    }
-
-    /**
-     * {@link DoFn} that outputs a single KV.of(null, null) kick off the {@link GroupByKey}
-     * in the streaming create implementation.
-     */
-    private static class OutputNullKv extends DoFn<String, KV<Void, Void>> {
-      @Override
-      public void processElement(DoFn<String, KV<Void, Void>>.ProcessContext c) throws Exception {
-        c.output(KV.of((Void) null, (Void) null));
-      }
-    }
-
-    /**
-     * A {@link DoFn} which outputs the specified elements by first encoding them to bytes using
-     * the specified {@link Coder} so that they are serialized as part of the {@link DoFn} but
-     * need not implement {@code Serializable}.
-     */
-    private static class OutputElements<T> extends DoFn<Object, T> {
-      private final Coder<T> coder;
-      private final List<byte[]> encodedElements;
-
-      public OutputElements(Iterable<T> elems, Coder<T> coder) {
-        this.coder = coder;
-        this.encodedElements = new ArrayList<>();
-        for (T t : elems) {
-          try {
-            encodedElements.add(CoderUtils.encodeToByteArray(coder, t));
-          } catch (CoderException e) {
-            throw new IllegalArgumentException("Unable to encode value " + t
-                + " with coder " + coder, e);
-          }
-        }
-      }
-
-      @Override
-      public void processElement(ProcessContext c) throws IOException {
-        for (byte[] encodedElement : encodedElements) {
-          c.output(CoderUtils.decodeFromByteArray(coder, encodedElement));
-        }
-      }
-    }
-
-    @Override
-    public PCollection<T> apply(PInput input) {
-      try {
-        Coder<T> coder = transform.getDefaultOutputCoder(input);
-        return Pipeline.applyTransform(
-            "StartingSignal", input, PubsubIO.Read.subscription("_starting_signal/"))
-            .apply(ParDo.of(new OutputNullKv()))
-            .apply("GlobalSingleton", Window.<KV<Void, Void>>into(new GlobalWindows())
-                .triggering(AfterPane.elementCountAtLeast(1))
-                .withAllowedLateness(Duration.ZERO)
-                .discardingFiredPanes())
-            .apply(GroupByKey.<Void, Void>create())
-            // Go back to the default windowing strategy, so that our setting allowed lateness
-            // doesn't count as the user having set it.
-            .setWindowingStrategyInternal(WindowingStrategy.globalDefault())
-            .apply(Window.<KV<Void, Iterable<Void>>>into(new GlobalWindows()))
-            .apply(ParDo.of(new OutputElements<>(transform.getElements(), coder)))
-            .setCoder(coder).setIsBoundedInternal(IsBounded.BOUNDED);
-      } catch (CannotProvideCoderException e) {
-        throw new IllegalArgumentException("Unable to infer a coder and no Coder was specified. "
-            + "Please set a coder by invoking Create.withCoder() explicitly.", e);
-      }
-    }
-
-    @Override
-    protected String getKindString() {
-      return "StreamingCreate";
-    }
-  }
-
-  /**
-   * A specialized {@link DoFn} for writing the contents of a {@link PCollection}
+   * A specialized {@link OldDoFn} for writing the contents of a {@link PCollection}
    * to a streaming {@link PCollectionView} backend implementation.
    */
   private static class StreamingPCollectionViewWriterFn<T>
-  extends DoFn<Iterable<T>, T> implements DoFn.RequiresWindowAccess {
+  extends OldDoFn<Iterable<T>, T> implements OldDoFn.RequiresWindowAccess {
     private final PCollectionView<?> view;
     private final Coder<T> dataCoder;
 
@@ -2645,7 +2552,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
     }
   }
 
-  private static class WrapAsList<T> extends DoFn<T, List<T>> {
+  private static class WrapAsList<T> extends OldDoFn<T, List<T>> {
     @Override
     public void processElement(ProcessContext c) {
       c.output(Arrays.asList(c.element()));
@@ -2808,7 +2715,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
     @Nullable
     private PTransform<?, ?> transform;
     @Nullable
-    private DoFn<?, ?> doFn;
+    private OldDoFn<?, ?> doFn;
 
     /**
      * Builds an instance of this class from the overridden transform.

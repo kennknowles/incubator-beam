@@ -31,7 +31,7 @@ import org.apache.beam.sdk.io.range.ByteKeyRange;
 import org.apache.beam.sdk.io.range.ByteKeyRangeTracker;
 import org.apache.beam.sdk.options.PipelineOptions;
 import org.apache.beam.sdk.runners.PipelineRunner;
-import org.apache.beam.sdk.transforms.DoFn;
+import org.apache.beam.sdk.transforms.OldDoFn;
 import org.apache.beam.sdk.transforms.PTransform;
 import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.transforms.display.DisplayData;
@@ -512,7 +512,7 @@ public class BigtableIO {
       return new BigtableServiceImpl(options);
     }
 
-    private class BigtableWriterFn extends DoFn<KV<ByteString, Iterable<Mutation>>, Void> {
+    private class BigtableWriterFn extends OldDoFn<KV<ByteString, Iterable<Mutation>>, Void> {
 
       public BigtableWriterFn(String tableId, BigtableService bigtableService) {
         this.tableId = checkNotNull(tableId, "tableId");
@@ -808,6 +808,19 @@ public class BigtableIO {
     @Override
     public void validate() {
       checkArgument(!tableId.isEmpty(), "tableId cannot be empty");
+    }
+
+    @Override
+    public void populateDisplayData(DisplayData.Builder builder) {
+      super.populateDisplayData(builder);
+
+      builder.add(DisplayData.item("tableId", tableId)
+          .withLabel("Table ID"));
+
+      if (filter != null) {
+        builder.add(DisplayData.item("rowFilter", filter.toString())
+            .withLabel("Table Row Filter"));
+      }
     }
 
     @Override
