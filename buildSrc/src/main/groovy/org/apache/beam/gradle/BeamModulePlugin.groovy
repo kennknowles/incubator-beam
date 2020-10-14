@@ -782,7 +782,12 @@ class BeamModulePlugin implements Plugin<Project> {
           ]
 
           project.dependencies {
-            checkerFramework("org.checkerframework:checker:$checkerframework_version")
+            if (project.hasProperty("cfLocal")) {
+              def cfHome = String.valueOf(System.getenv("CHECKERFRAMEWORK"))
+              checkerFramework project.files(cfHome + "/checker/dist/checker.jar")
+            } else {
+              checkerFramework("org.checkerframework:checker:$checkerframework_version")
+            }
           }
         }
       }
