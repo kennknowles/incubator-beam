@@ -48,6 +48,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * representing the beginning of the first record to be decoded.
  */
 @VisibleForTesting
+@SuppressWarnings("nullness")
 class TextSource extends FileBasedSource<String> {
   byte[] delimiter;
 

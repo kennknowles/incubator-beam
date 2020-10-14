@@ -30,6 +30,7 @@ import java.util.List;
  *
  * @param <T> the type of the values being transcoded
  */
+@SuppressWarnings("nullness")
 public abstract class AtomicCoder<T> extends StructuredCoder<T> {
   /**
    * {@inheritDoc}.

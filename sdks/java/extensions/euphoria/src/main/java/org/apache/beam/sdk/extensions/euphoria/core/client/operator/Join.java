@@ -76,6 +76,7 @@ import org.joda.time.Duration;
             + "complexity",
     state = StateComplexity.LINEAR,
     repartitions = 1)
+@SuppressWarnings("nullness")
 public class Join<LeftT, RightT, KeyT, OutputT>
     extends ShuffleOperator<Object, KeyT, KV<KeyT, OutputT>> {
 

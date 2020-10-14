@@ -20,8 +20,11 @@ plugins {
   id 'org.apache.beam.module'
   id 'ca.coglinc.javacc'
 }
-applyJavaNature(enableChecker:false,
+applyJavaNature(
   automaticModuleName: 'org.apache.beam.sdk.io.clickhouse',
+  generatedClassPatterns: [
+    '^org\\.apache\\.beam\\.sdk\\.io\\.clickhouse\\.impl\\.parser\\..*',
+  ],
   ignoreRawtypeErrors: true,
   // javacc generated code produces lint warnings
   disableLintWarnings: ['dep-ann']

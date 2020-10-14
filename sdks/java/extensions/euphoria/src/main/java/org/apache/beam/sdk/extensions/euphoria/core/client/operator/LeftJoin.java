@@ -53,6 +53,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * </ol>
  */
 @Audience(Audience.Type.CLIENT)
+@SuppressWarnings("nullness")
 public class LeftJoin {
 
   /**

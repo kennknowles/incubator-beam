@@ -36,6 +36,7 @@ import org.joda.time.Instant;
  * AfterWatermark} trigger firing, and the relation between the element's timestamp and the current
  * output watermark.
  */
+@SuppressWarnings("nullness")
 public class PaneInfoTracker {
   private TimerInternals timerInternals;
 

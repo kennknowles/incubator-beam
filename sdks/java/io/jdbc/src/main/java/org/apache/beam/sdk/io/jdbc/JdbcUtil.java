@@ -36,6 +36,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Immutabl
 import org.joda.time.DateTime;
 
 /** Provides utility functions for working with {@link JdbcIO}. */
+@SuppressWarnings("nullness")
 class JdbcUtil {
 
   /** Generates an insert statement based on {@link Schema.Field}. * */

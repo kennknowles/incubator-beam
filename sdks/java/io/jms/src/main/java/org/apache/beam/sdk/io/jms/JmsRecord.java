@@ -28,6 +28,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * JmsRecord contains message payload of the record as well as metadata (JMS headers and
  * properties).
  */
+@SuppressWarnings("nullness")
 public class JmsRecord implements Serializable {
 
   private final @Nullable String jmsMessageID;

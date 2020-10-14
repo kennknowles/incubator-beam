@@ -103,6 +103,7 @@ import org.joda.time.DateTimeZone;
  *
  * @param <T> the type of elements handled by this coder
  */
+@SuppressWarnings("nullness")
 public class AvroCoder<T> extends CustomCoder<T> {
 
   /**

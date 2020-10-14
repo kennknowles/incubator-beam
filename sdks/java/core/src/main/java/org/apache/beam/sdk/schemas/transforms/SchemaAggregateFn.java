@@ -48,6 +48,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** This is the builder used by {@link Group} to build up a composed {@link CombineFn}. */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 class SchemaAggregateFn {
   static Inner create() {
     return new AutoValue_SchemaAggregateFn_Inner.Builder()

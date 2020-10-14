@@ -61,6 +61,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Immutabl
  * SSEAwsKeyManagementParams}.
  */
 @AutoService(Module.class)
+@SuppressWarnings("nullness")
 public class AwsModule extends SimpleModule {
 
   private static final String AWS_ACCESS_KEY_ID = "awsAccessKeyId";

@@ -21,7 +21,7 @@ import groovy.json.JsonOutput
 plugins { id 'org.apache.beam.module' }
 applyJavaNature(
   exportJavadoc: false,
-  enableChecker: false,
+
   ignoreRawtypeErrors: true,
   automaticModuleName: 'org.apache.beam.examples')
 provideIntegrationTestingDependencies()

@@ -38,6 +38,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 @NotThreadSafe
 @Audience(Audience.Type.EXECUTOR)
+@SuppressWarnings("nullness")
 public class AdaptableCollector<InputT, OutputT, ElemT>
     implements Collector<ElemT>, Context, Serializable {
 

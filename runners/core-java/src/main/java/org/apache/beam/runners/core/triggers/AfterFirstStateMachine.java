@@ -28,6 +28,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Immutabl
  * Create a composite {@link TriggerStateMachine} that fires once after at least one of its
  * sub-triggers have fired.
  */
+@SuppressWarnings("nullness")
 public class AfterFirstStateMachine extends TriggerStateMachine {
 
   AfterFirstStateMachine(List<TriggerStateMachine> subTriggers) {

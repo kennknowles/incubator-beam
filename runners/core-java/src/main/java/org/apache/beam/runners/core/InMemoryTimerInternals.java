@@ -34,6 +34,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.Instant;
 
 /** {@link TimerInternals} with all watermarks and processing clock simulated in-memory. */
+@SuppressWarnings("nullness")
 public class InMemoryTimerInternals implements TimerInternals {
 
   /** The current set timers by namespace and ID. */

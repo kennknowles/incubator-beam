@@ -31,6 +31,7 @@ import software.amazon.kinesis.common.InitialPositionInStream;
  * expressed either as an {@link InitialPositionInStream} enum constant or a timestamp, in which
  * case the reader will start reading at the specified point in time.
  */
+@SuppressWarnings("nullness")
 class StartingPoint implements Serializable {
 
   private final InitialPositionInStream position;

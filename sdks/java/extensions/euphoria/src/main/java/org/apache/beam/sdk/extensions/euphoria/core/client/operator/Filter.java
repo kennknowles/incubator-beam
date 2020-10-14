@@ -49,6 +49,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 @Audience(Audience.Type.CLIENT)
 @Derived(state = StateComplexity.ZERO, repartitions = 0)
+@SuppressWarnings("nullness")
 public class Filter<InputT> extends Operator<InputT> implements CompositeOperator<InputT, InputT> {
 
   /**

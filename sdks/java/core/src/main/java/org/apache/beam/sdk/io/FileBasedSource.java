@@ -62,6 +62,7 @@ import org.slf4j.LoggerFactory;
  *
  * @param <T> Type of records represented by the source.
  */
+@SuppressWarnings("nullness")
 public abstract class FileBasedSource<T> extends OffsetBasedSource<T> {
   private static final Logger LOG = LoggerFactory.getLogger(FileBasedSource.class);
 

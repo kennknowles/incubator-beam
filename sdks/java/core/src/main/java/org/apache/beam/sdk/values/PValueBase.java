@@ -32,6 +32,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * PValue}.
  */
 @Internal
+@SuppressWarnings("nullness")
 public abstract class PValueBase implements PValue {
 
   private final transient @Nullable Pipeline pipeline;

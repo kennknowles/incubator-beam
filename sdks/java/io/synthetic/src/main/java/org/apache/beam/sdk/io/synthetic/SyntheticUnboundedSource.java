@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 /** A {@link SyntheticUnboundedSource} that reads {@code KV<byte[], byte[]>}. */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class SyntheticUnboundedSource
     extends UnboundedSource<KV<byte[], byte[]>, SyntheticRecordsCheckpoint> {
 

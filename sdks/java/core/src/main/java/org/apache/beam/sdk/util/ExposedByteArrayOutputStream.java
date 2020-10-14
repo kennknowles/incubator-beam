@@ -27,6 +27,7 @@ import org.apache.beam.sdk.annotations.Internal;
  * #writeAndOwn(byte[])}, it will return that array directly.
  */
 @Internal
+@SuppressWarnings("nullness")
 public class ExposedByteArrayOutputStream extends ByteArrayOutputStream {
 
   private byte[] swappedBuffer;

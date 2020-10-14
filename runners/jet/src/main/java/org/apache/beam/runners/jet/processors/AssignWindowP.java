@@ -37,6 +37,7 @@ import org.joda.time.Instant;
  *
  * @param <T> type of element being windowed
  */
+@SuppressWarnings("nullness")
 public class AssignWindowP<T> extends AbstractProcessor {
 
   @SuppressWarnings({"FieldCanBeLocal", "unused"})

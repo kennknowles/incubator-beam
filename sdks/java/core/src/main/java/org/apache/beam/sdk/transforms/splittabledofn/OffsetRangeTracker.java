@@ -38,6 +38,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * - 1}.
  */
 @Experimental(Kind.SPLITTABLE_DO_FN)
+@SuppressWarnings("nullness")
 public class OffsetRangeTracker extends RestrictionTracker<OffsetRange, Long>
     implements HasProgress {
   protected OffsetRange range;

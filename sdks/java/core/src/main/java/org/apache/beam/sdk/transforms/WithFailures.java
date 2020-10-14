@@ -69,6 +69,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * }</pre>
  */
 @Experimental(Kind.WITH_EXCEPTIONS)
+@SuppressWarnings("nullness")
 public class WithFailures {
 
   /**

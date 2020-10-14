@@ -101,6 +101,7 @@ import org.slf4j.LoggerFactory;
  * perform a split request. See <a href="https://s.apache.org/beam-breaking-fusion">breaking the
  * fusion barrier</a> for further details.
  */
+@SuppressWarnings({"nullness", "keyfor"})
 public class ProcessBundleHandler {
 
   // TODO: What should the initial set of URNs be?

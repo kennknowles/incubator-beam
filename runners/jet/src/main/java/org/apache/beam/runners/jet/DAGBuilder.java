@@ -41,6 +41,7 @@ import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollectionView;
 
 /** Utility class for wiring up Jet DAGs based on Beam pipelines. */
+@SuppressWarnings("nullness")
 public class DAGBuilder {
 
   private final DAG dag = new DAG();

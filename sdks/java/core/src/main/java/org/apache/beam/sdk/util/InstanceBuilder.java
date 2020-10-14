@@ -35,6 +35,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *
  * @param <T> type type of object returned by this instance builder
  */
+@SuppressWarnings("nullness")
 public class InstanceBuilder<T> {
 
   /**

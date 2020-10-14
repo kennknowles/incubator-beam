@@ -61,6 +61,7 @@ import org.joda.time.Duration;
  *
  * @param <T> the type of the elements of the input and output {@code PCollection}s
  */
+@SuppressWarnings("nullness")
 public class Distinct<T> extends PTransform<PCollection<T>, PCollection<T>> {
 
   /**

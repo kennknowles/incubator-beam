@@ -35,6 +35,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Immutabl
 import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.ImmutableMap;
 
 /** Converts to and from Beam Runner API representations of {@link Coder Coders}. */
+@SuppressWarnings("nullness")
 public class CoderTranslation {
 
   /**

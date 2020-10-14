@@ -30,6 +30,7 @@ import org.apache.beam.sdk.values.TypeDescriptor;
 import org.apache.beam.sdk.values.TypeDescriptors;
 
 /** Key extracting utility transformation shared among operator translators. */
+@SuppressWarnings("nullness")
 class ExtractKey<KeyT, ValueT>
     extends PTransform<PCollection<ValueT>, PCollection<KV<KeyT, ValueT>>> {
 

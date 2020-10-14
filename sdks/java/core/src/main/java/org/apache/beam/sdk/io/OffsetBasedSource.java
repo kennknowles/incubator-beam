@@ -54,6 +54,7 @@ import org.slf4j.LoggerFactory;
  * @see FileBasedSource
  * @see RangeTracker
  */
+@SuppressWarnings("nullness")
 public abstract class OffsetBasedSource<T> extends BoundedSource<T> {
   private final long startOffset;
   private final long endOffset;

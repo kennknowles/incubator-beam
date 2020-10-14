@@ -47,6 +47,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** Parser for textual field-access selector. */
 @Internal
+@SuppressWarnings("nullness")
 public class FieldAccessDescriptorParser {
   public static FieldAccessDescriptor parse(String expr) {
     CharStream charStream = CharStreams.fromString(expr);

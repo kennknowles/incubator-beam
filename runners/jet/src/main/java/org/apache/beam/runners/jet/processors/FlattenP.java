@@ -30,6 +30,7 @@ import org.apache.beam.sdk.coders.Coder;
 import org.apache.beam.sdk.util.WindowedValue;
 
 /** Jet {@link com.hazelcast.jet.core.Processor} implementation for Beam's Flatten primitive. */
+@SuppressWarnings("nullness")
 public class FlattenP extends AbstractProcessor {
 
   private final Map<Integer, Coder> inputOrdinalCoders;

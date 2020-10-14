@@ -61,6 +61,7 @@ import org.slf4j.LoggerFactory;
  * (HEC) endpoint.
  */
 @AutoValue
+@SuppressWarnings("nullness")
 abstract class HttpEventPublisher {
 
   private static final Logger LOG = LoggerFactory.getLogger(HttpEventPublisher.class);

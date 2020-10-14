@@ -29,6 +29,7 @@ import org.apache.beam.vendor.grpc.v1p26p0.com.google.protobuf.ByteString;
  *
  * <p>TODO: Support block level caching and prefetch.
  */
+@SuppressWarnings("nullness")
 public class MultimapSideInput<K, V> implements MultimapView<K, V> {
 
   private final BeamFnStateClient beamFnStateClient;

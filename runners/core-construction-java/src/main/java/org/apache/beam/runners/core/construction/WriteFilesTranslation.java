@@ -54,6 +54,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Lists;
  * Utility methods for translating a {@link WriteFiles} to and from {@link RunnerApi}
  * representations.
  */
+@SuppressWarnings("nullness")
 public class WriteFilesTranslation {
 
   /** The URN for an unknown Java {@link FileBasedSink}. */

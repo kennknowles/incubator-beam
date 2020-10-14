@@ -25,6 +25,7 @@ import org.apache.beam.sdk.values.TypeParameter;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** A collections of {@link TypeDescriptor} construction methods. */
+@SuppressWarnings("nullness")
 public class TypeUtils {
 
   /**

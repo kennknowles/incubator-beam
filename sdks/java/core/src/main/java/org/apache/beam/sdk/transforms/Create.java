@@ -101,7 +101,7 @@ import org.joda.time.Instant;
  *
  * @param <T> the type of the elements of the resulting {@code PCollection}
  */
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+@SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "nullness"})
 public class Create<T> {
   /**
    * Returns a new {@code Create.Values} transform that produces a {@link PCollection} containing

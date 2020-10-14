@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @see ByteKey
  * @see ByteKeyRange
  */
+@SuppressWarnings("nullness")
 public final class ByteKeyRangeTracker implements RangeTracker<ByteKey> {
   private static final Logger LOG = LoggerFactory.getLogger(ByteKeyRangeTracker.class);
 

@@ -42,6 +42,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Iterable
  *
  * <p>TODO: Support block level caching and prefetch.
  */
+@SuppressWarnings("nullness")
 public class BagUserState<T> {
   private final BeamFnStateClient beamFnStateClient;
   private final StateRequest request;

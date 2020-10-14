@@ -35,6 +35,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** A set of utilities for converting between different objects supporting schemas. */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class Convert {
   /**
    * Convert a {@link PCollection}{@literal <InputT>} into a {@link PCollection}{@literal <Row>}.

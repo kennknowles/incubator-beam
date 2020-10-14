@@ -65,6 +65,7 @@ import org.apache.beam.sdk.values.TupleTag;
 import org.apache.beam.sdk.values.WindowingStrategy;
 import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Lists;
 
+@SuppressWarnings("nullness")
 abstract class AbstractParDoP<InputT, OutputT> implements Processor {
 
   private final SerializablePipelineOptions pipelineOptions;

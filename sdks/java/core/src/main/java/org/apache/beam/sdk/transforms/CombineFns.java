@@ -50,6 +50,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Maps;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** Static utility methods that create combine function instances. */
+@SuppressWarnings({"nullness", "initialization"})
 public class CombineFns {
 
   /**

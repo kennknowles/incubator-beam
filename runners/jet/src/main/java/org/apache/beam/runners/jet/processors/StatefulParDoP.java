@@ -51,6 +51,7 @@ import org.joda.time.Instant;
 /**
  * Jet {@link com.hazelcast.jet.core.Processor} implementation for Beam's stateful ParDo primitive.
  */
+@SuppressWarnings("nullness")
 public class StatefulParDoP<OutputT>
     extends AbstractParDoP<KV<?, ?>, OutputT> { // todo: unify with ParDoP?
 

@@ -42,6 +42,7 @@ import org.apache.hadoop.conf.Configuration;
  * values dropping any configuration hierarchy and source information.
  */
 @AutoService(Module.class)
+@SuppressWarnings("nullness")
 public class HadoopFileSystemModule extends SimpleModule {
   public HadoopFileSystemModule() {
     super("HadoopFileSystemModule");

@@ -48,6 +48,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** A set of reflection helper methods. */
 @Internal
+@SuppressWarnings("nullness")
 public class ReflectUtils {
   /** Represents a class and a schema. */
   @AutoValue

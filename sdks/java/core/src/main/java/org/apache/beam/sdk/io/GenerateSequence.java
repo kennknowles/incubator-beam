@@ -70,6 +70,7 @@ import org.joda.time.Instant;
  * will be present in the resulting {@link PCollection}.
  */
 @AutoValue
+@SuppressWarnings("nullness")
 public abstract class GenerateSequence extends PTransform<PBegin, PCollection<Long>> {
   abstract long getFrom();
 

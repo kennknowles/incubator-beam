@@ -49,6 +49,7 @@ import org.apache.beam.vendor.bytebuddy.v1_10_8.net.bytebuddy.matcher.ElementMat
 import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Maps;
 
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 class AvroByteBuddyUtils {
   private static final ByteBuddy BYTE_BUDDY = new ByteBuddy();
 

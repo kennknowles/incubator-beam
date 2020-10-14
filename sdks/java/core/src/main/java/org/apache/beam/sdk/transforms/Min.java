@@ -43,6 +43,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *     .apply(Min.<String>integersPerKey());
  * }</pre>
  */
+@SuppressWarnings("nullness")
 public class Min {
 
   private Min() {

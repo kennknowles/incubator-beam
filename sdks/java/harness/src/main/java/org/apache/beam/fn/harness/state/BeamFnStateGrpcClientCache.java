@@ -40,6 +40,7 @@ import org.slf4j.LoggerFactory;
  *
  * <p>TODO: Add the ability to close which cancels any pending and stops any future requests.
  */
+@SuppressWarnings("nullness")
 public class BeamFnStateGrpcClientCache {
   private static final Logger LOG = LoggerFactory.getLogger(BeamFnStateGrpcClientCache.class);
 

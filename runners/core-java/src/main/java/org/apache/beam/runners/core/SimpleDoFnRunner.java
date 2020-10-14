@@ -76,6 +76,7 @@ import org.joda.time.format.PeriodFormat;
  * @param <InputT> the type of the {@link DoFn} (main) input elements
  * @param <OutputT> the type of the {@link DoFn} (main) output elements
  */
+@SuppressWarnings({"nullness", "keyfor"})
 public class SimpleDoFnRunner<InputT, OutputT> implements DoFnRunner<InputT, OutputT> {
 
   private final PipelineOptions options;

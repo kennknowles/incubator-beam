@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** Jet specific implementation of {@link PipelineResult}. */
+@SuppressWarnings("nullness")
 public class JetPipelineResult implements PipelineResult {
 
   private static final Logger LOG = LoggerFactory.getLogger(JetPipelineResult.class);

@@ -45,6 +45,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * PCollection<InputT>} into a {@link PCollection} of JSON {@link String Strings} representing
  * objects in the original {@link PCollection} using Jackson.
  */
+@SuppressWarnings("nullness")
 public class AsJsons<InputT> extends PTransform<PCollection<InputT>, PCollection<String>> {
   private static final ObjectMapper DEFAULT_MAPPER = new ObjectMapper();
 

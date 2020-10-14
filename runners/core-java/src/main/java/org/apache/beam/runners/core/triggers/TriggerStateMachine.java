@@ -93,6 +93,7 @@ import org.joda.time.Instant;
  * invocations of the callbacks. All important values should be persisted using state before the
  * callback returns.
  */
+@SuppressWarnings("nullness")
 public abstract class TriggerStateMachine implements Serializable {
 
   /**

@@ -42,6 +42,7 @@ import org.apache.beam.sdk.util.WindowedValue;
  * Jet {@link com.hazelcast.jet.core.Processor} implementation for reading from a bounded Beam
  * source.
  */
+@SuppressWarnings("nullness")
 public class BoundedSourceP<T> extends AbstractProcessor implements Traverser {
 
   private final Traverser<BoundedSource<T>> shardsTraverser;

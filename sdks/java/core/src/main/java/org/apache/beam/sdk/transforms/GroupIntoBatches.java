@@ -83,6 +83,7 @@ import org.slf4j.LoggerFactory;
  *         .withMaxBufferingDuration(maxBufferingDuration));
  * }</pre>
  */
+@SuppressWarnings("nullness")
 public class GroupIntoBatches<K, InputT>
     extends PTransform<PCollection<KV<K, InputT>>, PCollection<KV<K, Iterable<InputT>>>> {
 

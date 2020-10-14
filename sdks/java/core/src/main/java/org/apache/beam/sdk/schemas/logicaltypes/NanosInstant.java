@@ -21,6 +21,7 @@ import java.time.Instant;
 import org.apache.beam.sdk.values.Row;
 
 /** A timestamp represented as nanoseconds since the epoch. */
+@SuppressWarnings("nullness")
 public class NanosInstant extends NanosType<Instant> {
   public static final String IDENTIFIER = "beam:logical_type:nanos_instant:v1";
 

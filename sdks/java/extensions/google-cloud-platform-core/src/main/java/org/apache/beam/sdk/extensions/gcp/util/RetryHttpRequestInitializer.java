@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  * <p>Also can take an HttpResponseInterceptor to be applied to the responses.
  */
+@SuppressWarnings("nullness")
 public class RetryHttpRequestInitializer implements HttpRequestInitializer {
 
   private static final Logger LOG = LoggerFactory.getLogger(RetryHttpRequestInitializer.class);

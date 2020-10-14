@@ -90,6 +90,7 @@ import org.xml.sax.ContentHandler;
  * }</pre>
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class TikaIO {
   /** Parses files matching a given filepattern. */
   public static Parse parse() {

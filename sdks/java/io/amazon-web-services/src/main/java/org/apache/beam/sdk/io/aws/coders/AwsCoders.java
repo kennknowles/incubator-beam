@@ -36,6 +36,7 @@ import org.apache.beam.sdk.coders.VarIntCoder;
 import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.ImmutableMap;
 
 /** {@link Coder}s for common AWS SDK objects. */
+@SuppressWarnings("nullness")
 public final class AwsCoders {
 
   private AwsCoders() {}
