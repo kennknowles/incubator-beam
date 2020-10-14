@@ -206,6 +206,7 @@ import org.slf4j.LoggerFactory;
  * statements</a> supported by your database instead.
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class JdbcIO {
 
   private static final Logger LOG = LoggerFactory.getLogger(JdbcIO.class);

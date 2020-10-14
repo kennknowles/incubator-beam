@@ -30,6 +30,7 @@ import org.apache.hive.hcatalog.data.HCatRecord;
 
 /** Utilities to convert {@link HCatRecord HCatRecords} to {@link Row Rows}. */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class HCatToRow {
 
   /**

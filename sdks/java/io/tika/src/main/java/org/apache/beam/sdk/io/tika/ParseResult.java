@@ -34,6 +34,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * text, and optionally an error. If there is an error, the metadata and extracted text may be
  * partial (i.e. not represent the entire file).
  */
+@SuppressWarnings("nullness")
 public class ParseResult implements Serializable {
   private final String fileLocation;
   private final String content;

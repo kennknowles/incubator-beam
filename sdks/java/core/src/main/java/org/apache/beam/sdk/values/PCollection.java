@@ -76,6 +76,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *
  * @param <T> the type of the elements of this {@link PCollection}
  */
+@SuppressWarnings("nullness")
 public class PCollection<T> extends PValueBase implements PValue {
 
   /**

@@ -47,6 +47,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * on the schema.
  */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class JavaBeanSchema extends GetterBasedSchemaProvider {
   /** {@link FieldValueTypeSupplier} that's based on getter methods. */
   @VisibleForTesting

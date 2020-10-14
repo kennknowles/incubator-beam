@@ -36,6 +36,7 @@ import org.joda.time.Duration;
  *
  * @param <T> type of windowed element
  */
+@SuppressWarnings("nullness")
 class WindowBuilder<T>
     implements Builders.WindowBy<WindowBuilder<T>>,
         Builders.TriggeredBy<WindowBuilder<T>>,

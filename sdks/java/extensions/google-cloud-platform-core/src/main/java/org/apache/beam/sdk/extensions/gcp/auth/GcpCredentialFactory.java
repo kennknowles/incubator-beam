@@ -28,6 +28,7 @@ import org.apache.beam.sdk.options.PipelineOptions;
  * Construct an oauth credential to be used by the SDK and the SDK workers. Returns a GCP
  * credential.
  */
+@SuppressWarnings("nullness")
 public class GcpCredentialFactory implements CredentialFactory {
   /**
    * The scope cloud-platform provides access to all Cloud Platform resources. cloud-platform isn't

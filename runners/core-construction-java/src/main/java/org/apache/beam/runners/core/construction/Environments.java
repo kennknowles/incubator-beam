@@ -60,6 +60,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** Utilities for interacting with portability {@link Environment environments}. */
+@SuppressWarnings("nullness")
 public class Environments {
   private static final Logger LOG = LoggerFactory.getLogger(Environments.class);
 

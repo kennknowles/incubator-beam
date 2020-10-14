@@ -33,6 +33,7 @@ import org.apache.beam.sdk.values.PValue;
  * Utilities for ensuring that all {@link Read} {@link PTransform PTransforms} are consumed by some
  * {@link PTransform}.
  */
+@SuppressWarnings("nullness")
 public class UnconsumedReads {
   public static void ensureAllReadsConsumed(Pipeline pipeline) {
     final Set<PCollection<?>> unconsumed = new HashSet<>();

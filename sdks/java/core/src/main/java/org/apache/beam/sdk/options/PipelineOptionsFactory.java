@@ -114,6 +114,7 @@ import org.slf4j.LoggerFactory;
  * href="http://www.oracle.com/technetwork/java/javase/documentation/spec-136004.html">JavaBeans
  * specification</a> for more details as to what constitutes a property.
  */
+@SuppressWarnings({"nullness", "keyfor"})
 public class PipelineOptionsFactory {
   /**
    * Creates and returns an object that implements {@link PipelineOptions}. This sets the {@link

@@ -85,8 +85,8 @@ import org.slf4j.LoggerFactory;
  * {@link #pruningPrefix} to halt the traversal so it does not uselessly catalog references that are
  * not interesting.
  */
-@SuppressWarnings("rawtypes")
 @Internal
+@SuppressWarnings({"rawtypes", "nullness"})
 public class ApiSurface {
   private static final Logger LOG = LoggerFactory.getLogger(ApiSurface.class);
 

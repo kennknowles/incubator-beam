@@ -39,6 +39,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.Instant;
 import org.joda.time.base.AbstractInstant;
 
+@SuppressWarnings("nullness")
 class RowUtils {
   static class RowPosition {
     FieldAccessDescriptor descriptor;

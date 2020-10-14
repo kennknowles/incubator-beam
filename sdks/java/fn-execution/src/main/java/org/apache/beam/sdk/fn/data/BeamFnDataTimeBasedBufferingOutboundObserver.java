@@ -33,6 +33,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.util.concurrent.
  * A buffering outbound {@link FnDataReceiver} with both size-based buffer and time-based buffer
  * enabled for the Beam Fn Data API.
  */
+@SuppressWarnings("nullness")
 public class BeamFnDataTimeBasedBufferingOutboundObserver<T>
     extends BeamFnDataSizeBasedBufferingOutboundObserver<T> {
 

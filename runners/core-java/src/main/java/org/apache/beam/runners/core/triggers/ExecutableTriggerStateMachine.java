@@ -30,6 +30,7 @@ import org.apache.beam.sdk.transforms.windowing.BoundedWindow;
  * times (both in the same trigger expression and in other trigger expressions), the {@code
  * ExecutableTrigger} wrapped around them forms a tree (only one occurrence).
  */
+@SuppressWarnings("nullness")
 public class ExecutableTriggerStateMachine implements Serializable {
 
   /** Store the index assigned to this trigger. */

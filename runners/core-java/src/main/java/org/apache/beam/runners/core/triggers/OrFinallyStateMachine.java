@@ -23,6 +23,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.annotations.Visi
 /**
  * Executes the {@code actual} trigger until it finishes or until the {@code until} trigger fires.
  */
+@SuppressWarnings("nullness")
 class OrFinallyStateMachine extends TriggerStateMachine {
 
   private static final int ACTUAL = 0;

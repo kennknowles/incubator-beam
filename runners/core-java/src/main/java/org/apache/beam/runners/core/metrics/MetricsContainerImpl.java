@@ -55,6 +55,7 @@ import org.slf4j.LoggerFactory;
  * <p>For consistency, all threads that update metrics should finish before getting the final
  * cumulative values/updates.
  */
+@SuppressWarnings("nullness")
 public class MetricsContainerImpl implements Serializable, MetricsContainer {
   private static final Logger LOG = LoggerFactory.getLogger(MetricsContainerImpl.class);
 

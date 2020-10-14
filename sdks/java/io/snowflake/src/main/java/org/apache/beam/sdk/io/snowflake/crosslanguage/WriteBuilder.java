@@ -32,6 +32,7 @@ import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.PDone;
 
 @Experimental(Kind.PORTABILITY)
+@SuppressWarnings("nullness")
 public class WriteBuilder
     implements ExternalTransformBuilder<WriteBuilder.Configuration, PCollection<byte[]>, PDone> {
 

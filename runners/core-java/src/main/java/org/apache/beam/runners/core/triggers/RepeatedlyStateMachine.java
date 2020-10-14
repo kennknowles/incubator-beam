@@ -31,6 +31,7 @@ import java.util.Arrays;
  * <p>{@code Repeatedly.forever(someTrigger)} behaves like an infinite {@code
  * AfterEach.inOrder(someTrigger, someTrigger, someTrigger, ...)}.
  */
+@SuppressWarnings("nullness")
 public class RepeatedlyStateMachine extends TriggerStateMachine {
 
   private static final int REPEATED = 0;

@@ -29,6 +29,7 @@ import org.apache.hadoop.fs.Path;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** {@link ResourceId} implementation for the {@link HadoopFileSystem}. */
+@SuppressWarnings("nullness")
 class HadoopResourceId implements ResourceId {
   private final URI uri;
 

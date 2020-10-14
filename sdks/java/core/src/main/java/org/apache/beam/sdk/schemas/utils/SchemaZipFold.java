@@ -37,6 +37,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Immutabl
  * <p>Values returned by `accept` are accumulated.
  */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public abstract class SchemaZipFold<T> implements Serializable {
 
   public final T apply(Schema left, Schema right) {

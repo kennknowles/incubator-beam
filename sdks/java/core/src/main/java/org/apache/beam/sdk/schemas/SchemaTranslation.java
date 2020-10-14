@@ -47,6 +47,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Maps;
 
 /** Utility methods for translating schemas. */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class SchemaTranslation {
 
   private static final String URN_BEAM_LOGICAL_DATETIME = "beam:logical_type:datetime:v1";

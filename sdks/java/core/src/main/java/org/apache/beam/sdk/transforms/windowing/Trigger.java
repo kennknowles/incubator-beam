@@ -71,6 +71,7 @@ import org.joda.time.Instant;
  * </ul>
  */
 @Experimental(Kind.TRIGGER)
+@SuppressWarnings("nullness")
 public abstract class Trigger implements Serializable {
 
   protected final List<Trigger> subTriggers;

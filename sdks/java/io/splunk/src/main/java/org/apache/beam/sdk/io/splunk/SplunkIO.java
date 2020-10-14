@@ -85,6 +85,7 @@ import org.slf4j.LoggerFactory;
  * }</pre>
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class SplunkIO {
 
   /**

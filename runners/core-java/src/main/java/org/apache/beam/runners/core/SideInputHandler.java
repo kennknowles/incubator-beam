@@ -58,6 +58,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * data. For now, this will never clean up side-input data because we have no way of knowing when we
  * reach the GC horizon.
  */
+@SuppressWarnings("nullness")
 public class SideInputHandler implements ReadyCheckingSideInputReader {
   private static final Set<String> SUPPORTED_MATERIALIZATIONS =
       ImmutableSet.of(

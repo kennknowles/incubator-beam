@@ -24,6 +24,7 @@ import org.apache.beam.sdk.io.azure.options.BlobstoreOptions;
 import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.Strings;
 
 /** Construct BlobServiceClientBuilder with given values of Azure client properties. */
+@SuppressWarnings("nullness")
 public class DefaultBlobstoreClientBuilderFactory implements BlobstoreClientBuilderFactory {
 
   @Override

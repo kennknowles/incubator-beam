@@ -31,6 +31,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Iterable
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** An in-memory representation of {@link MultimapView}. */
+@SuppressWarnings("nullness")
 public class InMemoryMultimapSideInputView<K, V> implements Materializations.MultimapView<K, V> {
   /** An empty {@link MultimapView}. */
   private static final MultimapView EMPTY =

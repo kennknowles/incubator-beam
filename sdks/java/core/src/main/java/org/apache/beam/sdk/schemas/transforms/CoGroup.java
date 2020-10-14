@@ -206,6 +206,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>Do note that cross-product joins while simpler and easier to program, can cause performance problems.
  */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class CoGroup {
   private static final List NULL_LIST;
 

@@ -53,6 +53,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>Full outer joins, left outer joins, and right outer joins are also supported.
  */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class Join {
   public static final String LHS_TAG = "lhs";
   public static final String RHS_TAG = "rhs";

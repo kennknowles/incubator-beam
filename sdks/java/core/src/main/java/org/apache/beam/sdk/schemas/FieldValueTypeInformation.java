@@ -32,6 +32,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** Represents type information for a Java type that will be used to infer a Schema type. */
 @AutoValue
+@SuppressWarnings("nullness")
 public abstract class FieldValueTypeInformation implements Serializable {
   /** Returns the field name. */
   public abstract String getName();

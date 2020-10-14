@@ -22,6 +22,7 @@ import org.apache.beam.sdk.util.SerializableUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** Useful {@link SerializableFunction} overrides. */
+@SuppressWarnings("nullness")
 public class SerializableFunctions {
   public static <InT, OutT extends Serializable> SerializableFunction<InT, OutT> clonesOf(
       final OutT base) {

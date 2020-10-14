@@ -91,6 +91,7 @@ import org.joda.time.Instant;
  * }</pre>
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class AmqpIO {
 
   public static Read read() {

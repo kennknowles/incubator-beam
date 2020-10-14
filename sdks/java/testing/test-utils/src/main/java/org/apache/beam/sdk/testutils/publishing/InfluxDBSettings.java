@@ -19,6 +19,7 @@ package org.apache.beam.sdk.testutils.publishing;
 
 import static org.apache.beam.repackaged.core.org.apache.commons.lang3.StringUtils.isBlank;
 
+@SuppressWarnings("nullness")
 public final class InfluxDBSettings {
 
   public final String host;

@@ -25,6 +25,7 @@ import org.apache.beam.sdk.io.snowflake.enums.WriteDisposition;
 import org.apache.beam.sdk.transforms.SerializableFunction;
 
 /** Class for preparing configuration for batch write and read. */
+@SuppressWarnings("nullness")
 public class SnowflakeBatchServiceConfig extends ServiceConfig {
   private final SerializableFunction<Void, DataSource> dataSourceProviderFn;
 

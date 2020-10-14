@@ -30,6 +30,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.Suppliers;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import software.amazon.awssdk.services.sqs.SqsClient;
 
+@SuppressWarnings("nullness")
 class SqsUnboundedSource extends UnboundedSource<SqsMessage, SqsCheckpointMark> {
   private final Read read;
   private final Supplier<SqsClient> sqs;

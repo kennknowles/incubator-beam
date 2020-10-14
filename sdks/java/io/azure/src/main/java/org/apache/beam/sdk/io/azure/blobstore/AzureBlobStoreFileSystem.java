@@ -64,6 +64,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** {@link FileSystem} implementation for Azure Blob Storage. */
+@SuppressWarnings("nullness")
 class AzureBlobStoreFileSystem extends FileSystem<AzfsResourceId> {
 
   private static final Logger LOG = LoggerFactory.getLogger(AzureBlobStoreFileSystem.class);

@@ -24,6 +24,7 @@ import org.apache.beam.sdk.state.TimeDomain;
  * {@link RepeatedlyStateMachine#forever} and {@link AfterWatermarkStateMachine#pastEndOfWindow} for
  * more details.
  */
+@SuppressWarnings("nullness")
 public class DefaultTriggerStateMachine extends TriggerStateMachine {
 
   private DefaultTriggerStateMachine() {

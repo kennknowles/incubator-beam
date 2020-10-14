@@ -58,6 +58,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Maps;
 
 /** A set of utilities to generate getter and setter classes for JavaBean objects. */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class JavaBeanUtils {
   /** Create a {@link Schema} for a Java Bean class. */
   public static Schema schemaFromJavaBeanClass(

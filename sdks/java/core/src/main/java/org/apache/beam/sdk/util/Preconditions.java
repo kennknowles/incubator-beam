@@ -31,6 +31,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * appropriate exception classes while being static analysis friendly.
  */
 @Internal
+@SuppressWarnings("nullness")
 public class Preconditions {
   /**
    * Ensures that an object reference passed as a parameter to the calling method is not null.

@@ -86,6 +86,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * }</pre>
  */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class Select {
   public static <T> Fields<T> create() {
     return fieldAccess(FieldAccessDescriptor.create());

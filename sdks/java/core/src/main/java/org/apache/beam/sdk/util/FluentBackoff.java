@@ -27,6 +27,7 @@ import org.joda.time.Duration;
  *
  * @see #DEFAULT for the default configuration parameters.
  */
+@SuppressWarnings("nullness")
 public final class FluentBackoff {
 
   private static final double DEFAULT_EXPONENT = 1.5;

@@ -25,6 +25,7 @@ import org.apache.beam.sdk.runners.TransformHierarchy;
 import org.apache.beam.sdk.values.PValue;
 
 /** A DOT renderer for BEAM {@link Pipeline} DAG. */
+@SuppressWarnings("nullness")
 public class PipelineDotRenderer implements Pipeline.PipelineVisitor {
   public static String toDotString(Pipeline pipeline) {
     final PipelineDotRenderer visitor = new PipelineDotRenderer();

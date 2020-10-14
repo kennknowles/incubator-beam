@@ -107,6 +107,7 @@ import redis.clients.jedis.ScanResult;
  * }</pre>
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class RedisIO {
 
   /** Read data from a Redis server. */

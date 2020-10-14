@@ -119,6 +119,7 @@ import org.joda.time.Instant;
  * }</pre>
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class RabbitMqIO {
   public static Read read() {
     return new AutoValue_RabbitMqIO_Read.Builder()

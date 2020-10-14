@@ -41,6 +41,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** {@link SchemaCoder} is used as the coder for types that have schemas registered. */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class SchemaCoder<T> extends CustomCoder<T> {
   protected final Schema schema;
   private final TypeDescriptor<T> typeDescriptor;
