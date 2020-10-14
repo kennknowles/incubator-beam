@@ -42,6 +42,7 @@ import org.joda.time.Instant;
  *
  * This class is immutable.
  */
+@SuppressWarnings("nullness")
 class ShardCheckpoint implements Serializable {
 
   private final String streamName;

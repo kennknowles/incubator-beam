@@ -128,6 +128,7 @@ import software.amazon.awssdk.services.dynamodb.model.WriteRequest;
  * </ul>
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public final class DynamoDBIO {
   public static <T> Read<T> read() {
     return new AutoValue_DynamoDBIO_Read.Builder().build();

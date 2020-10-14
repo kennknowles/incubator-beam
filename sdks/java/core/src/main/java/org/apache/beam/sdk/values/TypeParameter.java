@@ -34,6 +34,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * }
  * }</pre>
  */
+@SuppressWarnings("nullness")
 public abstract class TypeParameter<T> {
   final TypeVariable<?> typeVariable;
 

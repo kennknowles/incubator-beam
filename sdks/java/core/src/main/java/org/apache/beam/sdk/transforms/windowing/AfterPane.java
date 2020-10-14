@@ -30,6 +30,7 @@ import org.joda.time.Instant;
  * arrived.
  */
 @Experimental(Kind.TRIGGER)
+@SuppressWarnings("nullness")
 public class AfterPane extends OnceTrigger {
 
   private final int countElems;

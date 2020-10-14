@@ -81,6 +81,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * </ul>
  */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class RowJson {
   private static final ImmutableSet<TypeName> SUPPORTED_TYPES =
       ImmutableSet.of(BYTE, INT16, INT32, INT64, FLOAT, DOUBLE, BOOLEAN, STRING, DECIMAL);

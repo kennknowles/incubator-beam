@@ -33,6 +33,7 @@ import org.apache.beam.sdk.util.MimeTypes;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** A {@link FileBasedSink} for Avro files. */
+@SuppressWarnings("nullness")
 public class AvroSink<UserT, DestinationT, OutputT>
     extends FileBasedSink<UserT, DestinationT, OutputT> {
   private final boolean genericRecords;

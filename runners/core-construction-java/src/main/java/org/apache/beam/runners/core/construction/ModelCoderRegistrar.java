@@ -45,6 +45,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Sets;
 
 /** The {@link CoderTranslatorRegistrar} for coders which are shared across languages. */
 @AutoService(CoderTranslatorRegistrar.class)
+@SuppressWarnings("nullness")
 public class ModelCoderRegistrar implements CoderTranslatorRegistrar {
 
   // The URNs for coders which are shared across languages

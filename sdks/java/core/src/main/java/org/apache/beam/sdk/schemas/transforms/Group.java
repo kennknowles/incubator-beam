@@ -92,6 +92,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Lists;
  * ApproximateQuantilesCombineFn in the above example.
  */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class Group {
   /**
    * Returns a transform that groups all elements in the input {@link PCollection}. The returned

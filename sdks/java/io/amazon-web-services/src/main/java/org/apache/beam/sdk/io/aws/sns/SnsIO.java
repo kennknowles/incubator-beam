@@ -87,6 +87,7 @@ import org.slf4j.LoggerFactory;
  * can call {@link Write#withFullPublishResultWithoutHeaders}.
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public final class SnsIO {
 
   // Write data tp SNS

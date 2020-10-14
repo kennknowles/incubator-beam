@@ -31,6 +31,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * <p>See {@link SimpleFunction} for providing robust type information where a {@link
  * SerializableFunction} is required.
  */
+@SuppressWarnings("nullness")
 public abstract class InferableFunction<InputT, OutputT>
     implements ProcessFunction<InputT, OutputT>, HasDisplayData {
 

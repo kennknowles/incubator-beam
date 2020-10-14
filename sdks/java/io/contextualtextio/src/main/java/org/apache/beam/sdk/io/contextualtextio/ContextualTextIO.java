@@ -208,6 +208,7 @@ import org.slf4j.LoggerFactory;
  * performance and scalability. Note that it may decrease performance if the filepattern matches
  * only a small number of files.
  */
+@SuppressWarnings("nullness")
 public class ContextualTextIO {
   private static final long DEFAULT_BUNDLE_SIZE_BYTES = 64 * 1024 * 1024L;
   private static final Logger LOG = LoggerFactory.getLogger(ContextualTextIO.class);

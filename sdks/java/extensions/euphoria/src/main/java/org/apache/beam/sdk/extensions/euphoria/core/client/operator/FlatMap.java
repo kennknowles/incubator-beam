@@ -82,6 +82,7 @@ import org.joda.time.Duration;
  */
 @Audience(Audience.Type.CLIENT)
 @Basic(state = StateComplexity.ZERO, repartitions = 0)
+@SuppressWarnings("nullness")
 public class FlatMap<InputT, OutputT> extends Operator<OutputT>
     implements TypeAware.Output<OutputT> {
 

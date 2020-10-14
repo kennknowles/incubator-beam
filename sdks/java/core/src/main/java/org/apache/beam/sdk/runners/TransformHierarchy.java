@@ -56,6 +56,7 @@ import org.slf4j.LoggerFactory;
  * PValue}s.
  */
 @Internal
+@SuppressWarnings("nullness")
 public class TransformHierarchy {
   private static final Logger LOG = LoggerFactory.getLogger(TransformHierarchy.class);
 

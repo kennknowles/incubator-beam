@@ -118,6 +118,7 @@ import ru.yandex.clickhouse.settings.ClickHouseQueryParam;
  * done using {@link org.apache.beam.sdk.schemas.transforms.Cast} before {@link ClickHouseIO}.
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class ClickHouseIO {
 
   public static final long DEFAULT_MAX_INSERT_BLOCK_SIZE = 1000000;

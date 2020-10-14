@@ -182,6 +182,7 @@ import org.slf4j.LoggerFactory;
  *     documentation</a>
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class ParquetIO {
 
   /**

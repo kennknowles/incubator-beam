@@ -40,6 +40,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * to process.
  */
 @Experimental(Kind.SPLITTABLE_DO_FN)
+@SuppressWarnings("nullness")
 public class ByteKeyRangeTracker extends RestrictionTracker<ByteKeyRange, ByteKey>
     implements HasProgress {
   /* An empty range which contains no keys. */

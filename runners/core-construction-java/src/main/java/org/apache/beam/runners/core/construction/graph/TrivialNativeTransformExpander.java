@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * TrivialNativeTransformExpander is used to replace transforms with known URNs with their native
  * equivalent.
  */
+@SuppressWarnings("nullness")
 public class TrivialNativeTransformExpander {
   private static final Logger LOG = LoggerFactory.getLogger(TrivialNativeTransformExpander.class);
 

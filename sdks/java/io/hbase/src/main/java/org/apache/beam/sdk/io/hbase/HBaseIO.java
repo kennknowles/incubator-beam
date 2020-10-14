@@ -157,6 +157,7 @@ import org.slf4j.LoggerFactory;
  * .
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class HBaseIO {
   private static final Logger LOG = LoggerFactory.getLogger(HBaseIO.class);
 

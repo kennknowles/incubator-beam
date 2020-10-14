@@ -46,6 +46,7 @@ import org.slf4j.LoggerFactory;
  * guaranteed to provide a consistent result during file pattern matching.
  */
 @Internal
+@SuppressWarnings("nullness")
 public class FilePatternMatchingShardedFile implements ShardedFile {
 
   private static final Logger LOG = LoggerFactory.getLogger(FilePatternMatchingShardedFile.class);

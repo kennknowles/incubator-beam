@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"rawtypes", "nullness"})
 public @interface DefaultCoder {
   @CheckForNull
   Class<? extends Coder> value();

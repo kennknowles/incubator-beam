@@ -81,6 +81,7 @@ import org.joda.time.Duration;
  */
 @Audience(Audience.Type.CLIENT)
 @Derived(state = StateComplexity.CONSTANT, repartitions = 1)
+@SuppressWarnings("nullness")
 public class TopPerKey<InputT, KeyT, ValueT, ScoreT extends Comparable<ScoreT>>
     extends ShuffleOperator<InputT, KeyT, Triple<KeyT, ValueT, ScoreT>>
     implements TypeAware.Value<ValueT>, CompositeOperator<InputT, Triple<KeyT, ValueT, ScoreT>> {

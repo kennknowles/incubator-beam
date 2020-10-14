@@ -34,6 +34,7 @@ import org.apache.thrift.transport.TIOStreamTransport;
  *
  * @param <T> type of element handled by coder.
  */
+@SuppressWarnings("nullness")
 class ThriftCoder<T> extends CustomCoder<T> {
 
   private final Class<T> type;

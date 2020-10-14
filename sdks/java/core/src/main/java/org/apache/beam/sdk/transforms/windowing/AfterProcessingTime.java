@@ -36,6 +36,7 @@ import org.joda.time.format.PeriodFormatter;
  * input first arrives.
  */
 @Experimental(Kind.TRIGGER)
+@SuppressWarnings("nullness")
 public class AfterProcessingTime extends OnceTrigger {
 
   private static final PeriodFormatter DURATION_FORMATTER = PeriodFormat.wordBased(Locale.ENGLISH);

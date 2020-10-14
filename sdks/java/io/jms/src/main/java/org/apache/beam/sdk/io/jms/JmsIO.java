@@ -111,6 +111,7 @@ import org.joda.time.Instant;
  * }</pre>
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class JmsIO {
 
   public static Read<JmsRecord> read() {

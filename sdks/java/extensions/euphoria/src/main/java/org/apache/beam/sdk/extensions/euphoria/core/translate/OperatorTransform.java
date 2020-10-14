@@ -31,6 +31,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.Preconditio
  * @param <OutputT> type of output elements
  * @param <OperatorT> type of operator to expand
  */
+@SuppressWarnings("nullness")
 public class OperatorTransform<InputT, OutputT, OperatorT extends Operator<OutputT>>
     extends PTransform<PCollectionList<InputT>, PCollection<OutputT>> {
 

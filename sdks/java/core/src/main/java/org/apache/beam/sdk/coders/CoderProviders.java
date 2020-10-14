@@ -28,6 +28,7 @@ import org.apache.beam.sdk.values.TypeDescriptor;
 import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.MoreObjects;
 
 /** Static utility methods for creating and working with {@link CoderProvider}s. */
+@SuppressWarnings("nullness")
 public final class CoderProviders {
   private CoderProviders() {} // Static utility class
 

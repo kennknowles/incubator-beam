@@ -86,6 +86,7 @@ import org.slf4j.LoggerFactory;
  * in future versions of the Apache Beam SDK.
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class ThriftIO {
 
   private static final Logger LOG = LoggerFactory.getLogger(ThriftIO.class);

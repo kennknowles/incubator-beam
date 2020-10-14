@@ -179,6 +179,7 @@ import org.joda.time.Duration;
  * <p>For backwards compatibility, {@link TextIO} also supports the legacy {@link
  * DynamicDestinations} interface for advanced features via {@link Write#to(DynamicDestinations)}.
  */
+@SuppressWarnings("nullness")
 public class TextIO {
   private static final long DEFAULT_BUNDLE_SIZE_BYTES = 64 * 1024 * 1024L;
 

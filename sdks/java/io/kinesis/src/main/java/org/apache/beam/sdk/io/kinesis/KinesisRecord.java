@@ -28,6 +28,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.Instant;
 
 /** {@link UserRecord} enhanced with utility methods. */
+@SuppressWarnings("nullness")
 public class KinesisRecord {
 
   private Instant readTime;

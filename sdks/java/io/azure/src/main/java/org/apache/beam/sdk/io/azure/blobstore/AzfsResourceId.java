@@ -30,6 +30,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.Optional;
 import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.Strings;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+@SuppressWarnings("nullness")
 class AzfsResourceId implements ResourceId {
 
   static final String SCHEME = "azfs";

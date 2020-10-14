@@ -26,6 +26,7 @@ import java.io.Serializable;
 import org.apache.beam.sdk.io.aws.options.AwsModule;
 import org.apache.beam.sdk.io.aws.options.AwsOptions;
 
+@SuppressWarnings("nullness")
 class SqsConfiguration implements Serializable {
 
   private String awsRegion;

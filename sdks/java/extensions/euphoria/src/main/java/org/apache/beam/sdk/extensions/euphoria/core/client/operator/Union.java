@@ -66,6 +66,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 @Audience(Audience.Type.CLIENT)
 @Basic(state = StateComplexity.ZERO, repartitions = 0)
+@SuppressWarnings("nullness")
 public class Union<InputT> extends Operator<InputT> {
 
   /**

@@ -78,6 +78,7 @@ import org.joda.time.Duration;
  * <p>For more information on the available options see {@link AwsOptions}.
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class SqsIO {
 
   public static Read read() {

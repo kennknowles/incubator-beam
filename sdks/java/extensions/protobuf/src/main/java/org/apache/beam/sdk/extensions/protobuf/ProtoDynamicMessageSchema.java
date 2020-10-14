@@ -45,6 +45,7 @@ import org.apache.beam.sdk.transforms.SerializableFunction;
 import org.apache.beam.sdk.values.Row;
 
 @Experimental(Experimental.Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class ProtoDynamicMessageSchema<T> implements Serializable {
   public static final long serialVersionUID = 1L;
 

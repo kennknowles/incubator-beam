@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * This class is responsible for establishing the initial set of shards that existed at the given
  * starting point.
  */
+@SuppressWarnings("nullness")
 class StartingPointShardsFinder implements Serializable {
 
   private static final Logger LOG = LoggerFactory.getLogger(StartingPointShardsFinder.class);

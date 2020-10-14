@@ -29,6 +29,7 @@ import org.apache.beam.sdk.values.Row;
 
 /** A set of {@link LogicalType} classes to represent protocol buffer types. */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class ProtoSchemaLogicalTypes {
 
   /** Compatible schema with the row schema of NanosDuration and NanosInstant. */

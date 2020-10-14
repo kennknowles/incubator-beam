@@ -49,6 +49,7 @@ import org.joda.time.Instant;
  * org.apache.beam.sdk.state.Timer}.
  */
 @AutoValue
+@SuppressWarnings("nullness")
 public abstract class Timer<K> {
 
   /**

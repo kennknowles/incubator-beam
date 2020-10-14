@@ -68,6 +68,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /** A set of utilities to generate getter and setter classes for POJOs. */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class POJOUtils {
   public static Schema schemaFromPojoClass(
       Class<?> clazz, FieldValueTypeSupplier fieldValueTypeSupplier) {

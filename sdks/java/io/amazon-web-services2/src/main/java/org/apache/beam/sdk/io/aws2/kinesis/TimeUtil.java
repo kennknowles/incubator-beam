@@ -21,6 +21,7 @@ import java.util.Optional;
 import org.joda.time.Instant;
 
 /** Time conversion utilities. */
+@SuppressWarnings("nullness")
 public final class TimeUtil {
 
   public static java.time.Instant toJava(Instant timestamp) {

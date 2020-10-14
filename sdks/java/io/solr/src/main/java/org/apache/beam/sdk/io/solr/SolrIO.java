@@ -111,6 +111,7 @@ import org.slf4j.LoggerFactory;
  * default this is disabled and only one attempt will be made.
  */
 @Experimental(Kind.SOURCE_SINK)
+@SuppressWarnings("nullness")
 public class SolrIO {
 
   private static final Logger LOG = LoggerFactory.getLogger(SolrIO.class);

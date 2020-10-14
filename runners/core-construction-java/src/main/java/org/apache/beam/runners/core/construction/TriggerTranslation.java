@@ -47,6 +47,7 @@ import org.joda.time.Duration;
 import org.joda.time.Instant;
 
 /** Utilities for working with {@link TriggerTranslation Triggers}. */
+@SuppressWarnings("nullness")
 public class TriggerTranslation implements Serializable {
 
   @VisibleForTesting static final ProtoConverter CONVERTER = new ProtoConverter();

@@ -19,7 +19,10 @@
 plugins { id 'org.apache.beam.module' }
 applyJavaNature(
   automaticModuleName: 'org.apache.beam.sdk',
-  enableChecker: false,
+  classesTriggerCheckerBugs: [
+    'DoFnTester': 'https://github.com/typetools/checker-framework/issues/3776',
+    'WindowFnTestUtils': 'https://github.com/typetools/checker-framework/issues/3776',
+  ],
   ignoreRawtypeErrors: true,
   shadowClosure: {
     dependencies {
