@@ -92,6 +92,7 @@ import org.joda.time.ReadableInstant;
 
 /** Utils to convert AVRO records to Beam rows. */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class AvroUtils {
   static {
     // This works around a bug in the Avro library (AVRO-1891) around SpecificRecord's handling

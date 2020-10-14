@@ -33,6 +33,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 @Experimental(Kind.METRICS)
 @JsonFilter("committedMetrics")
 @AutoValue
+@SuppressWarnings("nullness")
 public abstract class MetricResult<T> {
   /** Return the name of the metric. */
   public MetricName getName() {

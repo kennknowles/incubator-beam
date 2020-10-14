@@ -81,6 +81,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * }</pre>
  */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class Filter {
   public static <T> Inner<T> create() {
     return new Inner<T>();

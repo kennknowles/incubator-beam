@@ -55,6 +55,7 @@ import org.apache.commons.compress.utils.Lists;
  * }</pre>
  */
 @Experimental(Kind.SCHEMAS)
+@SuppressWarnings("nullness")
 public class RenameFields {
   /** Create an instance of this transform. */
   public static <T> Inner<T> create() {

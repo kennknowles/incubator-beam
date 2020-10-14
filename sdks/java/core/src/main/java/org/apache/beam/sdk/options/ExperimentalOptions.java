@@ -29,6 +29,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 @Experimental
 @Hidden
+@SuppressWarnings("nullness")
 public interface ExperimentalOptions extends PipelineOptions {
 
   String STATE_CACHE_SIZE = "state_cache_size";

@@ -33,6 +33,7 @@ import org.joda.time.Instant;
 
 /** Common {@link OutputReceiver} and {@link MultiOutputReceiver} classes. */
 @Internal
+@SuppressWarnings("nullness")
 public class DoFnOutputReceivers {
   private static class RowOutputReceiver<T> implements OutputReceiver<Row> {
     WindowedContextOutputReceiver<T> outputReceiver;

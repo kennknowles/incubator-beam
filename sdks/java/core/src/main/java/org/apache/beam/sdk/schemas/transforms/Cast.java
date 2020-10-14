@@ -47,6 +47,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.collect.Maps;
 /** Set of utilities for casting rows between schemas. */
 @Experimental(Kind.SCHEMAS)
 @AutoValue
+@SuppressWarnings("nullness")
 public abstract class Cast<T> extends PTransform<PCollection<T>, PCollection<Row>> {
 
   public abstract Schema outputSchema();

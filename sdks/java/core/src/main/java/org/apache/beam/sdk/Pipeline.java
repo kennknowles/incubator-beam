@@ -118,6 +118,7 @@ import org.slf4j.LoggerFactory;
  *
  * }</pre>
  */
+@SuppressWarnings("nullness")
 public class Pipeline {
   private static final Logger LOG = LoggerFactory.getLogger(Pipeline.class);
   /**

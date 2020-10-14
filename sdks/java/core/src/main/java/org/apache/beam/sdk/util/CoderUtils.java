@@ -31,6 +31,7 @@ import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.base.Throwables;
 import org.apache.beam.vendor.guava.v26_0_jre.com.google.common.io.BaseEncoding;
 
 /** Utilities for working with Coders. */
+@SuppressWarnings("nullness")
 public final class CoderUtils {
   private CoderUtils() {} // Non-instantiable
 

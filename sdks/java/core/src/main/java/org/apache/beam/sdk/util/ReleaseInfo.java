@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 @AutoValue
 @Internal
+@SuppressWarnings("nullness")
 public abstract class ReleaseInfo implements Serializable {
   private static final String PROPERTIES_PATH = "/org/apache/beam/sdk/sdk.properties";
 

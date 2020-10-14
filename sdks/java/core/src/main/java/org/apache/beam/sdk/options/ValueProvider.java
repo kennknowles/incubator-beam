@@ -61,6 +61,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 @JsonSerialize(using = ValueProvider.Serializer.class)
 @JsonDeserialize(using = ValueProvider.Deserializer.class)
+@SuppressWarnings("nullness")
 public interface ValueProvider<T> extends Serializable {
   /**
    * Returns the runtime value wrapped by this {@link ValueProvider} in case it is {@link

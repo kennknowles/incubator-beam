@@ -39,6 +39,7 @@ import org.apache.beam.sdk.values.Row;
  */
 @Internal
 @AutoService(SchemaIOProvider.class)
+@SuppressWarnings("nullness")
 public class AvroSchemaIOProvider implements SchemaIOProvider {
   /** Returns an id that uniquely represents this IO. */
   @Override

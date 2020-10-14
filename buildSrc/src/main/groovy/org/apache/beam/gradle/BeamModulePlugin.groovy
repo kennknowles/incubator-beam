@@ -86,11 +86,12 @@ class BeamModulePlugin implements Plugin<Project> {
     /** Controls whether the spotbugs plugin is enabled and configured. */
     boolean enableSpotbugs = true
 
-    /** Controls whether the checker framework plugin is enabled and configured. */
-    boolean enableChecker = true
-
     /** Controls whether legacy rawtype usage is allowed. */
     boolean ignoreRawtypeErrors = false
+
+    /** Disable standard checks because `applyJavaNature` is applied to a module that does not contain
+     * module code. */
+    boolean disableCheckerBecauseCodeIsGenerated = false
 
     /** Controls whether the dependency analysis plugin is enabled. */
     boolean enableStrictDependencies = false
@@ -729,7 +730,9 @@ class BeamModulePlugin implements Plugin<Project> {
         options.compilerArgs += ([
           '-parameters',
           '-Xlint:all',
-          '-Werror'
+          '-Werror',
+          '-Xmaxerrs',
+          '10000'
         ]
         + (defaultLintSuppressions + configuration.disableLintWarnings).collect { "-Xlint:-${it}" })
       }
@@ -768,12 +771,8 @@ class BeamModulePlugin implements Plugin<Project> {
         maxHeapSize = '2g'
       }
 
-      // Most of our modules have null errors. Once they are fixed, we can
-      // set enableChecker=true in the build.gradle. Until then, we can pass -PenableChecker to
-      // find a few errors and fix them.
-      if (configuration.enableChecker) {
+      if (!configuration.disableCheckerBecauseCodeIsGenerated) {
         project.apply plugin: 'org.checkerframework'
-
         project.checkerFramework {
           checkers = [
             'org.checkerframework.checker.nullness.NullnessChecker'
@@ -781,10 +780,10 @@ class BeamModulePlugin implements Plugin<Project> {
           extraJavacArgs = [
             '-AskipDefs=AutoValue_.*'
           ]
-        }
 
-        project.dependencies {
-          checkerFramework("org.checkerframework:checker:$checkerframework_version")
+          project.dependencies {
+            checkerFramework("org.checkerframework:checker:$checkerframework_version")
+          }
         }
       }
 
@@ -1643,7 +1642,7 @@ class BeamModulePlugin implements Plugin<Project> {
       project.ext.applyJavaNature(
           exportJavadoc: false,
           enableSpotbugs: false,
-          enableChecker: false,
+          disableCheckerBecauseCodeIsGenerated: true,
           publish: configuration.publish,
           archivesBaseName: configuration.archivesBaseName,
           automaticModuleName: configuration.automaticModuleName,

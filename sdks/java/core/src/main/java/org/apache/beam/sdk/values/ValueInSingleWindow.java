@@ -38,6 +38,7 @@ import org.joda.time.Instant;
  */
 @AutoValue
 @Internal
+@SuppressWarnings("nullness")
 public abstract class ValueInSingleWindow<T> {
   /** Returns the value of this {@code ValueInSingleWindow}. */
   public abstract @Nullable T getValue();

@@ -29,6 +29,7 @@ import org.apache.beam.sdk.schemas.Schema;
  * <p>Its input type is a {@link LocalTime}, and base type is a {@link Long} that represents a count
  * of time in nanoseconds.
  */
+@SuppressWarnings("nullness")
 public class Time implements Schema.LogicalType<LocalTime, Long> {
 
   @Override

@@ -104,6 +104,7 @@ import org.joda.time.Instant;
 
 /** Utilities for working with {@link DoFnSignature}. See {@link #getSignature}. */
 @Internal
+@SuppressWarnings("nullness")
 public class DoFnSignatures {
 
   private DoFnSignatures() {}

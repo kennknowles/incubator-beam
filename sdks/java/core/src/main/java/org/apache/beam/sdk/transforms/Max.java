@@ -43,6 +43,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *     .apply(Max.<String>integersPerKey());
  * }</pre>
  */
+@SuppressWarnings("nullness")
 public class Max {
 
   private Max() {
