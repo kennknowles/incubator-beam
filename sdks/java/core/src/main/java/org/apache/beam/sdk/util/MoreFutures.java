@@ -18,7 +18,6 @@
 package org.apache.beam.sdk.util;
 
 import com.google.auto.value.AutoValue;
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -180,7 +179,7 @@ public class MoreFutures {
    * <p>This is used, for example, in aggregating the results of many future values in {@link
    * #allAsList(Collection)}.
    */
-  @SuppressWarnings(
+  @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
       value = "NM_CLASS_NOT_EXCEPTION",
       justification = "The class does hold an exception; its name is accurate.")
   @AutoValue
