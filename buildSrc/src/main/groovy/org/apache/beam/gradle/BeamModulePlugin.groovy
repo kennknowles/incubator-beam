@@ -113,6 +113,12 @@ class BeamModulePlugin implements Plugin<Project> {
      */
     List<String> disableLintWarnings = []
 
+    /**
+     * List of additional lint warnings to disable for tests. This allows
+     * important linting to remain enabled for main classes.
+     */
+    List<String> disableLintWarningsForTests = []
+
     /** Controls whether tests are run with shadowJar. */
     boolean testShadowJar = false
 
@@ -743,12 +749,17 @@ class BeamModulePlugin implements Plugin<Project> {
         options.compilerArgs -= [
           "-Xlint:deprecation",
         ]
-        options.compilerArgs += ([
+        options.compilerArgs += [
           '-parameters',
           '-Xlint:all',
           '-Werror'
         ]
-        + (defaultLintSuppressions + configuration.disableLintWarnings).collect { "-Xlint:-${it}" })
+
+        def lintSuppressions = defaultLintSuppressions + configuration.disableLintWarnings
+        if (it.name == 'compileTestJava') {
+          lintSuppressions += configuration.disableLintWarningsForTests
+        }
+        options.compilerArgs += lintSuppressions.collect { "-Xlint:-${it}" }
       }
 
       if (project.hasProperty("compileAndRunTestsWithJava11")) {
