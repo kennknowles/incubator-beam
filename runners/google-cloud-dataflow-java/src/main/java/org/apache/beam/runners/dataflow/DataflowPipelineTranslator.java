@@ -845,14 +845,8 @@ public class DataflowPipelineTranslator {
             List<String> experiments = context.getPipelineOptions().getExperiments();
             boolean isFnApi = experiments != null && experiments.contains("beam_fn_api");
 
-            if (isFnApi) {
-              String ptransformId =
-                  context.getSdkComponents().getPTransformIdOrThrow(context.getCurrentParent());
-              stepContext.addInput(PropertyNames.SERIALIZED_FN, ptransformId);
-            } else {
-              stepContext.addInput(
-                  PropertyNames.SERIALIZED_FN, byteArrayToJsonString(serializeToByteArray(fn)));
-            }
+            stepContext.addInput(
+                PropertyNames.SERIALIZED_FN, byteArrayToJsonString(serializeToByteArray(fn)));
 
             stepContext.addOutput(PropertyNames.OUTPUT, context.getOutput(primitiveTransform));
           }
@@ -978,24 +972,6 @@ public class DataflowPipelineTranslator {
                 outputCoders,
                 doFnSchemaInformation,
                 sideInputMapping);
-
-            // TODO: Move this logic into translateFn once the legacy ProcessKeyedElements is
-            // removed.
-            if (context.isFnApi()) {
-              DoFnSignature signature = DoFnSignatures.signatureForDoFn(transform.getFn());
-              if (signature.processElement().isSplittable()) {
-                DoFnInvoker<?, ?> doFnInvoker = DoFnInvokers.invokerFor(transform.getFn());
-                Coder<?> restrictionAndWatermarkStateCoder =
-                    KvCoder.of(
-                        doFnInvoker.invokeGetRestrictionCoder(
-                            context.getInput(transform).getPipeline().getCoderRegistry()),
-                        doFnInvoker.invokeGetWatermarkEstimatorStateCoder(
-                            context.getInput(transform).getPipeline().getCoderRegistry()));
-                stepContext.addInput(
-                    PropertyNames.RESTRICTION_ENCODING,
-                    translateCoder(restrictionAndWatermarkStateCoder, context));
-              }
-            }
           }
         });
 
@@ -1043,24 +1019,6 @@ public class DataflowPipelineTranslator {
                 outputCoders,
                 doFnSchemaInformation,
                 sideInputMapping);
-
-            // TODO: Move this logic into translateFn once the legacy ProcessKeyedElements is
-            // removed.
-            if (context.isFnApi()) {
-              DoFnSignature signature = DoFnSignatures.signatureForDoFn(transform.getFn());
-              if (signature.processElement().isSplittable()) {
-                DoFnInvoker<?, ?> doFnInvoker = DoFnInvokers.invokerFor(transform.getFn());
-                Coder<?> restrictionAndWatermarkStateCoder =
-                    KvCoder.of(
-                        doFnInvoker.invokeGetRestrictionCoder(
-                            context.getInput(transform).getPipeline().getCoderRegistry()),
-                        doFnInvoker.invokeGetWatermarkEstimatorStateCoder(
-                            context.getInput(transform).getPipeline().getCoderRegistry()));
-                stepContext.addInput(
-                    PropertyNames.RESTRICTION_ENCODING,
-                    translateCoder(restrictionAndWatermarkStateCoder, context));
-              }
-            }
           }
         });
 
@@ -1258,11 +1216,6 @@ public class DataflowPipelineTranslator {
 
     stepContext.addInput(PropertyNames.USER_FN, fn.getClass().getName());
 
-    // Fn API does not need the additional metadata in the wrapper, and it is Java-only serializable
-    // hence not suitable for portable execution
-    if (context.isFnApi()) {
-      stepContext.addInput(PropertyNames.SERIALIZED_FN, ptransformId);
-    } else {
       stepContext.addInput(
           PropertyNames.SERIALIZED_FN,
           byteArrayToJsonString(
@@ -1276,7 +1229,6 @@ public class DataflowPipelineTranslator {
                       mainOutput,
                       doFnSchemaInformation,
                       sideInputMapping))));
-    }
 
     // Setting USES_KEYED_STATE will cause an ungrouped shuffle, which works
     // in streaming but does not work in batch
@@ -1294,6 +1246,6 @@ public class DataflowPipelineTranslator {
   }
 
   private static CloudObject translateCoder(Coder<?> coder, TranslationContext context) {
-    return CloudObjects.asCloudObject(coder, context.isFnApi() ? context.getSdkComponents() : null);
+    return CloudObjects.asCloudObject(coder);
   }
 }

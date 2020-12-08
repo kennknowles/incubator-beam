@@ -88,12 +88,12 @@ public class CloudObjects {
   }
 
   /** Convert the provided {@link Coder} into a {@link CloudObject}. */
-  public static CloudObject asCloudObject(Coder<?> coder, @Nullable SdkComponents sdkComponents) {
+  public static CloudObject asCloudObject(Coder<?> coder) {
     CloudObjectTranslator<Coder> translator =
         (CloudObjectTranslator<Coder>) CODER_TRANSLATORS.get(coder.getClass());
     CloudObject encoding;
     if (translator != null) {
-      encoding = translator.toCloudObject(coder, sdkComponents);
+      encoding = translator.toCloudObject(coder);
     } else {
       CloudObjectTranslator customCoderTranslator = CODER_TRANSLATORS.get(CustomCoder.class);
       checkNotNull(
@@ -102,15 +102,7 @@ public class CloudObjects {
           CloudObjectTranslator.class.getSimpleName(),
           CustomCoder.class.getSimpleName(),
           DefaultCoderCloudObjectTranslatorRegistrar.class.getSimpleName());
-      encoding = customCoderTranslator.toCloudObject(coder, sdkComponents);
-    }
-    if (sdkComponents != null && !DATAFLOW_KNOWN_CODERS.contains(coder.getClass())) {
-      try {
-        String coderId = sdkComponents.registerCoder(coder);
-        Structs.addString(encoding, PropertyNames.PIPELINE_PROTO_CODER_ID, coderId);
-      } catch (Exception e) {
-        throw new RuntimeException("Unable to register coder " + coder, e);
-      }
+      encoding = customCoderTranslator.toCloudObject(coder);
     }
     return encoding;
   }

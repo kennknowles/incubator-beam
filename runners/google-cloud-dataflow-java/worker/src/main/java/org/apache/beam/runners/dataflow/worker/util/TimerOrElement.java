@@ -25,7 +25,6 @@ import com.google.auto.service.AutoService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.apache.beam.runners.core.construction.SdkComponents;
 import org.apache.beam.runners.dataflow.util.CloudObject;
 import org.apache.beam.runners.dataflow.util.CloudObjectTranslator;
 import org.apache.beam.runners.dataflow.util.CloudObjects;
@@ -75,7 +74,7 @@ public class TimerOrElement {
   private static class TimerOrElementCloudObjectTranslator
       implements CloudObjectTranslator<TimerOrElementCoder> {
     @Override
-    public CloudObject toCloudObject(TimerOrElementCoder target, SdkComponents sdkComponents) {
+    public CloudObject toCloudObject(TimerOrElementCoder target) {
       throw new IllegalArgumentException("Should never be called");
     }
 

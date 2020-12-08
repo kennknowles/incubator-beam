@@ -19,7 +19,6 @@ package org.apache.beam.runners.dataflow.util;
 
 import java.io.IOException;
 import org.apache.beam.model.pipeline.v1.SchemaApi;
-import org.apache.beam.runners.core.construction.SdkComponents;
 import org.apache.beam.sdk.annotations.Experimental;
 import org.apache.beam.sdk.annotations.Experimental.Kind;
 import org.apache.beam.sdk.schemas.Schema;
@@ -43,7 +42,7 @@ public class SchemaCoderCloudObjectTranslator implements CloudObjectTranslator<S
 
   /** Convert to a cloud object. */
   @Override
-  public CloudObject toCloudObject(SchemaCoder target, SdkComponents sdkComponents) {
+  public CloudObject toCloudObject(SchemaCoder target) {
     CloudObject base = CloudObject.forClass(SchemaCoder.class);
 
     Structs.addString(

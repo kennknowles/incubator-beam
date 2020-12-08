@@ -924,8 +924,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
         Environments.createDockerEnvironment(workerHarnessContainerImageURL);
 
     sdkComponents.registerEnvironment(
-        defaultEnvironmentForDataflow
-            .toBuilder()
+        defaultEnvironmentForDataflow.toBuilder()
             .addAllDependencies(getDefaultArtifacts())
             .addAllCapabilities(Environments.getJavaCapabilities())
             .build());
@@ -1237,7 +1236,8 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
     BoundednessVisitor visitor = new BoundednessVisitor();
     p.traverseTopologically(visitor);
     return visitor.boundedness == IsBounded.UNBOUNDED;
-  };
+  }
+  ;
 
   /** Returns the DataflowPipelineTranslator associated with this object. */
   public DataflowPipelineTranslator getTranslator() {
@@ -1712,8 +1712,7 @@ public class DataflowRunner extends PipelineRunner<DataflowPipelineJob> {
 
     @Override
     public void translate(Impulse transform, TranslationContext context) {
-      if (context.getPipelineOptions().isStreaming()
-          && (!context.isFnApi() || !context.isStreamingEngine())) {
+      if (context.getPipelineOptions().isStreaming() && !context.isStreamingEngine()) {
         StepTranslationContext stepContext = context.addStep(transform, "ParallelRead");
         stepContext.addInput(PropertyNames.FORMAT, "pubsub");
         stepContext.addInput(PropertyNames.PUBSUB_SUBSCRIPTION, "_starting_signal/");

@@ -192,55 +192,11 @@ public class CloudObjectsTest {
 
     @Test
     public void toAndFromCloudObject() throws Exception {
-      CloudObject cloudObject = CloudObjects.asCloudObject(coder, /*sdkComponents=*/ null);
+      CloudObject cloudObject = CloudObjects.asCloudObject(coder);
       Coder<?> fromCloudObject = CloudObjects.coderFromCloudObject(cloudObject);
 
       assertEquals(coder.getClass(), fromCloudObject.getClass());
       assertEquals(coder, fromCloudObject);
-    }
-
-    @Test
-    public void toAndFromCloudObjectWithSdkComponents() throws Exception {
-      SdkComponents sdkComponents = SdkComponents.create();
-      CloudObject cloudObject = CloudObjects.asCloudObject(coder, sdkComponents);
-      Coder<?> fromCloudObject = CloudObjects.coderFromCloudObject(cloudObject);
-
-      assertEquals(coder.getClass(), fromCloudObject.getClass());
-      assertEquals(coder, fromCloudObject);
-
-      checkPipelineProtoCoderIds(coder, cloudObject, sdkComponents);
-    }
-
-    private static void checkPipelineProtoCoderIds(
-        Coder<?> coder, CloudObject cloudObject, SdkComponents sdkComponents) throws Exception {
-      if (CloudObjects.DATAFLOW_KNOWN_CODERS.contains(coder.getClass())) {
-        assertFalse(cloudObject.containsKey(PropertyNames.PIPELINE_PROTO_CODER_ID));
-      } else {
-        assertTrue(cloudObject.containsKey(PropertyNames.PIPELINE_PROTO_CODER_ID));
-        assertEquals(
-            sdkComponents.registerCoder(coder),
-            ((CloudObject) cloudObject.get(PropertyNames.PIPELINE_PROTO_CODER_ID))
-                .get(PropertyNames.VALUE));
-      }
-      List<? extends Coder<?>> expectedComponents;
-      if (coder instanceof StructuredCoder) {
-        expectedComponents = ((StructuredCoder) coder).getComponents();
-      } else {
-        expectedComponents = coder.getCoderArguments();
-      }
-      Object cloudComponentsObject = cloudObject.get(PropertyNames.COMPONENT_ENCODINGS);
-      List<CloudObject> cloudComponents;
-      if (cloudComponentsObject == null) {
-        cloudComponents = Lists.newArrayList();
-      } else {
-        assertThat(cloudComponentsObject, instanceOf(List.class));
-        cloudComponents = (List<CloudObject>) cloudComponentsObject;
-      }
-      assertEquals(expectedComponents.size(), cloudComponents.size());
-      for (int i = 0; i < expectedComponents.size(); i++) {
-        checkPipelineProtoCoderIds(
-            expectedComponents.get(i), cloudComponents.get(i), sdkComponents);
-      }
     }
   }
 

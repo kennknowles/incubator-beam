@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.apache.beam.runners.core.construction.SdkComponents;
 import org.apache.beam.runners.dataflow.internal.IsmFormat.IsmRecordCoder;
 import org.apache.beam.runners.dataflow.util.CloudObject;
 import org.apache.beam.runners.dataflow.util.CloudObjectTranslator;
@@ -74,7 +73,7 @@ public class RunnerHarnessCoderCloudObjectTranslatorRegistrar
       implements CloudObjectTranslator<IsmRecordCoder<?>> {
 
     @Override
-    public CloudObject toCloudObject(IsmRecordCoder<?> target, SdkComponents sdkComponents) {
+    public CloudObject toCloudObject(IsmRecordCoder<?> target) {
       throw new UnsupportedOperationException();
     }
 
@@ -104,7 +103,7 @@ public class RunnerHarnessCoderCloudObjectTranslatorRegistrar
     InstanceBuilder.ofType(coderClass).fromFactoryMethod("of").build();
     return new CloudObjectTranslator<T>() {
       @Override
-      public CloudObject toCloudObject(T target, SdkComponents sdkComponents) {
+      public CloudObject toCloudObject(T target) {
         throw new UnsupportedOperationException();
       }
 
